@@ -1,0 +1,7 @@
+.contact {
+    padding: var(--section-padding);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    place-items: center;
+}
