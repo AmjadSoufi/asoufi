@@ -9,62 +9,88 @@
     <link rel="stylesheet" href="static/css/main.css" />
     <link rel="stylesheet" href="static/css/projects.css" />
     <link rel="stylesheet" href="static/css/contact.css" />
+    <link rel="icon" href="static/images/favicon.ico" />
   </head>
   <body>
     <header class="header">
       <a href="#" class="header__logo">Amjad</a>
       <div class="header__right-section">
-        <div class="theme-switch">
+        <label class="theme-switch" for="theme-toggle">
           <input
             type="checkbox"
             id="theme-toggle"
             class="theme-switch__input"
           />
-          <label for="theme-toggle" class="theme-switch__label">
-            <i class="theme-switch__icon theme-switch__icon--moon">🌙</i>
-            <i class="theme-switch__icon theme-switch__icon--sun">☀️</i>
-          </label>
-        </div>
-        <div class="header__hamburger hamburger">
-          <span class="hamburger__bar"></span>
-          <span class="hamburger__bar"></span>
-          <span class="hamburger__bar"></span>
-        </div>
-        <nav class="header__navbar navbar">
+          <span class="theme-switch__label">
+            <i
+              class="theme-switch__icon theme-switch__icon--moon"
+              aria-hidden="true"
+              >🌙</i
+            >
+            <i
+              class="theme-switch__icon theme-switch__icon--sun"
+              aria-hidden="true"
+              >☀️</i
+            >
+          </span>
+        </label>
+
+        <nav class="header__navbar navbar" aria-label="Primary navigation">
           <a href="#home" class="navbar__link">Home</a>
           <a href="#about" class="navbar__link">About</a>
           <a href="#projects" class="navbar__link">Projects</a>
-          <a href="#" class="navbar__link">Contact</a>
+          <a href="#contact" class="navbar__link">Contact</a>
         </nav>
       </div>
+      <button
+        class="header__hamburger hamburger"
+        aria-label="Menu"
+        aria-expanded="false"
+        aria-controls="primary-navigation"
+      >
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+        <span class="hamburger__bar"></span>
+      </button>
     </header>
 
     <main>
-      <section class="hero">
+      <section class="hero" id="home">
         <img
-          id="home"
           src="static/images/hero-1.png"
-          alt=""
+          alt="Portrait of Amjad Soufi"
           class="hero__image"
         />
 
-        <div class="hero__text">
+        <section class="hero__text">
           <h1 class="hero__title">Hi, It's Amjad Soufi</h1>
           <p class="hero__description">
-            I am a junior programer who loves learning and growing in the tech
+            I am a junior programmer who loves learning and growing in the tech
             world. I pick up new challenges quickly and get tasks done
             efficiently with good attention to detail. I like to take
             initiative, learn new technologies, and always aim to be a helpful
             and positive team member.
           </p>
-        </div>
+        </section>
 
-        <div id="about" class="hero__social-icons social-icons">
-          <a href="https://github.com/AmjadSoufi" class="social-icons__link">
+        <nav
+          id="about"
+          class="hero__social-icons social-icons"
+          aria-label="Social media links"
+        >
+          <a
+            href="https://github.com/AmjadSoufi"
+            class="social-icons__link"
+            target="_blank"
+            rel="noopener"
+            aria-label="GitHub"
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 496 512"
               class="social-icons__icon"
+              role="img"
+              aria-hidden="true"
             >
               <path
                 d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
@@ -74,89 +100,187 @@
           <a
             href="https://be.linkedin.com/in/amjad-soufi-57794b316"
             class="social-icons__link"
+            target="_blank"
+            rel="noopener"
+            aria-label="LinkedIn"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 448 512"
               class="social-icons__icon"
+              role="img"
+              aria-hidden="true"
             >
               <path
                 d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"
               />
             </svg>
           </a>
-        </div>
-        
+        </nav>
       </section>
+
+      <section id="skills" class="skills">
+        <h2 class="skills__title">Skills</h2>
+        <div class="skills__grid">
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/sass-1.svg"
+              alt="SASS logo"
+              class="skills__icon"
+            />
+            <p>SASS</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.sanity.io/images/setp5dh3/production/d7195e29b5341239238068e47552ca13b1d1dc04-512x512.png"
+              alt="Tailwind CSS logo"
+              class="skills__icon"
+            />
+            <p>Tailwind</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/css-3.svg"
+              alt="CSS3 logo"
+              class="skills__icon"
+            />
+            <p>CSS3</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/react-1.svg"
+              alt="React JS logo"
+              class="skills__icon"
+            />
+            <p>React JS</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/git-icon.svg"
+              alt="Git logo"
+              class="skills__icon"
+            />
+            <p>Git</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.sanity.io/images/setp5dh3/production/66bbf9242b1ccffebb5d46f376f5036b527fad48-480x480.png"
+              alt="JavaScript logo"
+              class="skills__icon"
+            />
+            <p>JavaScript</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/html-1.svg"
+              alt="HTML5 logo"
+              class="skills__icon"
+            />
+            <p>HTML</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/typescript.svg"
+              alt="TypeScript logo"
+              class="skills__icon"
+            />
+            <p>TypeScript</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg"
+              alt="Node.js logo"
+              class="skills__icon"
+            />
+            <p>Node JS</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/bootstrap-4.svg"
+              alt="Bootstrap logo"
+              class="skills__icon"
+            />
+            <p>Bootstrap</p>
+          </div>
+          <div class="skills__item">
+            <img
+              src="https://cdn.worldvectorlogo.com/logos/react-native-1.svg"
+              alt="React Native logo"
+              class="skills__icon"
+            />
+            <p>React Native</p>
+          </div>
+        </div>
+      </section>
+
+      <section id="projects" class="projects">
+        <h2 class="projects__title">Projects</h2>
+        <ul class="projects__list">
+          <li class="projects__item">
+            <img
+              src="./static/images/make-it-happen.png"
+              alt="Screenshot of Make It Happen project"
+              class="projects__image"
+            />
+            <h3 class="projects__item-title">Make It Happen</h3>
+            <p class="projects__item-description">
+              A university project focused on creating a practical and
+              user-friendly to-do list application for daily task management.
+            </p>
+            <a
+              href="https://github.com/pgmgent-pgm-3/make-it-happen-AmjadSoufi"
+              class="projects__item-link"
+              target="_blank"
+              rel="noopener"
+              >View Code</a
+            >
+          </li>
+          <li class="projects__item">
+            <img
+              src="./static/images/best-of-2024.png"
+              alt="Screenshot of Best of 2024 project"
+              class="projects__image"
+            />
+            <h3 class="projects__item-title">Best of 2024</h3>
+            <p class="projects__item-description">
+              A university project showcasing the best movies, albums, series,
+              games, and music of 2024.
+            </p>
+            <a
+              href="https://github.com/pgm-2425-atwork-1/project-2-AmjadSoufi"
+              class="projects__item-link"
+              target="_blank"
+              rel="noopener"
+              >View Code</a
+            >
+          </li>
+          <li class="projects__item">
+            <img
+              src="./static/images/Memory-game.png"
+              alt="Screenshot of Memory Game project"
+              class="projects__image"
+            />
+            <h3 class="projects__item-title">Memory Game</h3>
+            <p class="projects__item-description">
+              A university project designed for new students interested in
+              programming, introducing the languages we use, explaining how
+              programming works, and providing a tutorial to create the same
+              game we developed. This aims to inspire excitement and encourage
+              them to join the program.
+            </p>
+            <a
+              href="https://github.com/pgmgent-atwork2/project-1-workshop-start-to-code-amjad-serdar"
+              class="projects__item-link"
+              target="_blank"
+              rel="noopener"
+              >View Code</a
+            >
+          </li>
+        </ul>
+      </section>
+
+      <section id="contact" class="contact"></section>
     </main>
-
-    <section id="projects" class="projects">
-      <h2 class="projects__title">Projects</h2>
-      <div class="projects__list">
-        <article class="projects__item">
-          <img
-            src="./static/images/make-it-happen.png"
-            alt="Project 1"
-            class="projects__image"
-          />
-          <h3 class="projects__item-title">Make It Happen</h3>
-          <p class="projects__item-description">
-            A university project focused on creating a practical and
-            user-friendly to-do list application for daily task management.
-          </p>
-          <a
-            href="https://github.com/pgmgent-pgm-3/make-it-happen-AmjadSoufi"
-            class="projects__item-link"
-            target="_blank"
-            rel="noopener"
-            >View Code</a
-          >
-        </article>
-        <article class="projects__item">
-          <img
-            src="./static/images/best-of-2024.png"
-            alt="Project 2"
-            class="projects__image"
-          />
-          <h3 class="projects__item-title">Best of 2024</h3>
-          <p class="projects__item-description">
-            A university project showcasing the best movies, albums, series,
-            games, and music of 2024.
-          </p>
-          <a
-            href="https://github.com/pgm-2425-atwork-1/project-2-AmjadSoufi"
-            class="projects__item-link"
-            target="_blank"
-            rel="noopener"
-            >View Code</a
-          >
-        </article>
-        <article class="projects__item">
-          <img
-            src="./static/images/Memory-game.png"
-            alt="Project 3"
-            class="projects__image"
-          />
-          <h3 class="projects__item-title">Memory Game</h3>
-          <p class="projects__item-description">
-            A university project designed for new students interested in
-            programming, introducing the languages we use, explaining how
-            programming works, and providing a tutorial to create the same game
-            we developed. This aims to inspire excitement and encourage them to
-            join the program.
-          </p>
-          <a
-            href="https://github.com/pgmgent-atwork2/project-1-workshop-start-to-code-amjad-serdar"
-            class="projects__item-link"
-            target="_blank"
-            rel="noopener"
-            >View Code</a
-          >
-        </article>
-      </div>
-    </section>
-
-    <section class="contact"></section>
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2025 Amjad. All rights reserved.</p>

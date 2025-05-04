@@ -35,14 +35,14 @@
 }
 
 .skills__icon {
-  width: 24px; /* Smaller fixed width */
-  height: 24px; /* Smaller fixed height */
+  width: 24px; 
+  height: 24px; 
   margin-bottom: 0.3rem;
-  object-fit: contain; /* Ensures the image fits within the box */
+  object-fit: contain; 
 }
 
 .skills__item p {
-  font-size: 0.8rem; /* Smaller font size for better fit */
+  font-size: 0.8rem; 
   color: var(--text-color);
   margin: 0;
 }
