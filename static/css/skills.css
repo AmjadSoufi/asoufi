@@ -1,0 +1,48 @@
+.skills {
+  padding: var(--section-padding);
+  text-align: center;
+}
+
+.skills__title {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--text-color);
+  margin-bottom: 2rem;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.skills__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 0.5rem;
+  justify-content: center;
+}
+
+.skills__item {
+  background-color: var(--nav-bg);
+  border-radius: 8px;
+  padding: 0.75rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.skills__item:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.skills__icon {
+  width: 24px; /* Smaller fixed width */
+  height: 24px; /* Smaller fixed height */
+  margin-bottom: 0.3rem;
+  object-fit: contain; /* Ensures the image fits within the box */
+}
+
+.skills__item p {
+  font-size: 0.8rem; /* Smaller font size for better fit */
+  color: var(--text-color);
+  margin: 0;
+}

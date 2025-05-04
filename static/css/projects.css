@@ -90,22 +90,3 @@
   box-shadow: 0 6px 18px rgba(0, 95, 141, 0.6);
   outline: none;
 }
-
-@media (max-width: 600px) {
-  .projects__image {
-    height: 160px;
-  }
-
-  .projects__title {
-    font-size: 2.2rem;
-    margin-bottom: 2.5rem;
-  }
-
-  .projects__item-title {
-    font-size: 1.5rem;
-  }
-
-  .projects__item-description {
-    font-size: 1rem;
-  }
-}
