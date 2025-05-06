@@ -5,14 +5,12 @@
 }
 
 .projects__title {
-  font-size: 2.8rem;
-  font-weight: 800;
+  font: 800 2.8rem "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
   text-align: center;
   margin-bottom: 3.5rem;
   letter-spacing: 1.2px;
   text-transform: uppercase;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
 }
 
@@ -21,7 +19,9 @@
   display: block;
   width: 80px;
   height: 4px;
-  background: linear-gradient(90deg, #0077b5, #4dabf7);
+  background: linear-gradient(
+    90deg,
+  );
   margin: 16px auto 0;
   border-radius: 2px;
 }
@@ -34,29 +34,29 @@
 }
 
 .projects__item {
-  background-color: var(--nav-bg);
+  background: var(--nav-bg);
   border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 30px var(--shadow-light);
+  border: 1px solid rgba(0, 0, 0, 0.05);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   position: relative;
-  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 [data-theme="dark"] .projects__item {
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  border-color: rgba(255, 255, 255, 0.05);
+  box-shadow: 0 10px 30px var(--shadow-dark);
 }
 
 .projects__item:hover {
   transform: translateY(-15px);
-  box-shadow: 0 20px 40px rgba(0, 119, 181, 0.15);
+  box-shadow: 0 20px 40px var(--shadow-hover-light);
 }
 
 [data-theme="dark"] .projects__item:hover {
-  box-shadow: 0 20px 40px rgba(0, 119, 181, 0.25);
+  box-shadow: 0 20px 40px var(--shadow-hover-dark);
 }
 
 .projects__image-container {
@@ -84,11 +84,9 @@
 }
 
 .projects__item-title {
-  font-size: 1.8rem;
+  font: 700 1.8rem "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
-  font-weight: 700;
   margin-bottom: 1rem;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
   padding-bottom: 0.8rem;
 }
@@ -100,7 +98,7 @@
   left: 0;
   width: 50px;
   height: 3px;
-  background: #0077b5;
+  background: var(--primary-color);
   border-radius: 3px;
 }
 
@@ -108,10 +106,8 @@
   flex-grow: 1;
   color: var(--text-color);
   opacity: 0.85;
-  font-size: 1.05rem;
-  line-height: 1.6;
+  font: normal 1.05rem/1.6 Georgia, serif;
   margin-bottom: 1.5rem;
-  font-family: "Georgia", serif;
 }
 
 .projects__item-link {
@@ -119,17 +115,19 @@
   align-items: center;
   justify-content: center;
   padding: 0.8rem 1.8rem;
-  background: linear-gradient(135deg, #0077b5, #0099e6);
-  color: white;
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-alt-start)
+  );
+  color: var(--category-text);
   border-radius: 50px;
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
+  font: 600 1rem "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 0.05em;
   transition: all 0.3s ease;
   align-self: flex-start;
   box-shadow: 0 4px 10px rgba(0, 119, 181, 0.3);
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   position: relative;
   overflow: hidden;
 }
@@ -155,7 +153,11 @@
 }
 
 .projects__item-link:hover {
-  background: linear-gradient(135deg, #005f8d, #0077b5);
+  background: linear-gradient(
+    135deg,
+    var(--primary-gradient-alt-end),
+    var(--primary-gradient-start)
+  );
   box-shadow: 0 6px 15px rgba(0, 95, 141, 0.5);
   transform: translateY(-3px);
 }
@@ -164,15 +166,13 @@
   position: absolute;
   top: 1rem;
   right: 1rem;
-  background-color: rgba(0, 119, 181, 0.9);
-  color: white;
+  background: var(--category-bg);
+  color: var(--category-text);
   padding: 0.4rem 1rem;
   border-radius: 30px;
-  font-size: 0.85rem;
-  font-weight: 600;
+  font: 600 0.85rem "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   letter-spacing: 0.5px;
   text-transform: uppercase;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   z-index: 1;
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
 }
@@ -182,11 +182,9 @@
     grid-template-columns: 1fr !important;
     gap: 2rem;
   }
-
   .projects__item-title {
     font-size: 1.6rem;
   }
-
   .projects__image-container {
     height: 180px;
   }

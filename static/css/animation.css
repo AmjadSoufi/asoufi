@@ -46,7 +46,7 @@
   align-items: center;
   justify-content: center;
   font-size: 14px;
-  color: #333;
+  color: var(--text-color);
   text-align: center;
 }
 
@@ -97,7 +97,11 @@
   left: 0;
   width: 0;
   height: 2px;
-  background: linear-gradient(90deg, #0077b5, #4dabf7);
+  background: linear-gradient(
+    90deg,
+    var(--primary-gradient-start),
+    var(--primary-gradient-end)
+  );
   transition: width 0.3s ease, transform 0.3s ease;
   transform-origin: bottom left;
 }
@@ -113,7 +117,7 @@
 
 .navbar__link.active {
   font-weight: 600;
-  color: #0077b5;
+  color: var(--primary-color);
 }
 
 html {
