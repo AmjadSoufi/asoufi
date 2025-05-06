@@ -4,7 +4,7 @@
   left: 0;
   width: 100%;
   padding: 20px 100px;
-  background-color: var(--header-bg);
+  background: var(--header-bg);
   color: var(--text-color);
   display: flex;
   justify-content: space-between;
@@ -14,29 +14,23 @@
 }
 
 .header__logo {
-  font-size: 32px;
+  font: 700 32px "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
   text-decoration: none;
-  font-weight: 700;
   transition: color 0.3s ease, transform 0.3s ease, text-shadow 0.3s ease;
 }
 
 .header__logo:hover {
-  color: #ff6347;
+  color: var(--accent-color, #ff6347);
   transform: scale(1.1);
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.header__right-section {
+.header__right-section,
+.theme-switch {
   display: flex;
   align-items: center;
   gap: 20px;
-}
-
-.theme-switch {
-  position: relative;
-  display: flex;
-  align-items: center;
 }
 
 .theme-switch__input {
@@ -46,10 +40,9 @@
 .theme-switch__label {
   cursor: pointer;
   padding: 5px;
-  background-color: var(--nav-bg);
+  background: var(--nav-bg);
   border-radius: 50px;
   display: flex;
-  align-items: center;
   justify-content: space-between;
   position: relative;
   width: 65px;
@@ -66,20 +59,19 @@
 .theme-switch__icon--sun {
   right: 5px;
 }
-
 .theme-switch__icon--moon {
   left: 5px;
 }
 
 .theme-switch__label::after {
   content: "";
-  width: 24px;
-  height: 24px;
   position: absolute;
-  background-color: var(--text-color);
-  border-radius: 50%;
   top: 1px;
   left: 1px;
+  width: 24px;
+  height: 24px;
+  background: var(--text-color);
+  border-radius: 50%;
   transition: 0.3s;
 }
 
@@ -89,9 +81,8 @@
 
 .header__navbar a {
   position: relative;
-  font-size: 18px;
+  font: 500 18px "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: var(--text-color);
-  font-weight: 500;
   text-decoration: none;
   margin-left: 40px;
   transition: color 0.3s;
@@ -104,7 +95,7 @@
   left: 0;
   width: 0;
   height: 2px;
-  background-color: var(--text-color);
+  background: var(--text-color);
   transition: 0.3s;
 }
 
@@ -115,6 +106,8 @@
 .header__hamburger {
   display: none;
   cursor: pointer;
+  background: transparent !important;
+  box-shadow: none !important;
 }
 
 .header__hamburger .hamburger__bar {
@@ -123,7 +116,16 @@
   height: 3px;
   margin: 5px auto;
   transition: all 0.3s ease;
-  background-color: var(--text-color);
+  background: var(--text-color) !important;
+}
+
+[data-theme="dark"] .header__hamburger {
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+[data-theme="dark"] .header__hamburger .hamburger__bar {
+  background: #fff !important;
 }
 
 @media (max-width: 800px) {
@@ -159,10 +161,10 @@
     position: fixed;
     left: -100%;
     top: 70px;
-    gap: 0;
     display: flex;
     flex-direction: column;
-    background-color: var(--nav-bg);
+    gap: 0;
+    background: var(--nav-bg);
     width: 100%;
     text-align: center;
     transition: 0.3s;
