@@ -17,7 +17,7 @@
 .skills-slider {
   --width: 120px;
   --height: 120px;
-  --quantity: 11; /* aantal skills */
+  --quantity: 11;
   width: 100%;
   height: var(--height);
   overflow: hidden;
@@ -73,4 +73,50 @@
 
 .skills-slider .item:hover {
   filter: grayscale(0);
+}
+
+.header__navbar {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.navbar__link {
+  position: relative;
+  color: var(--text-color);
+  text-decoration: none;
+  font: 500 1.1rem "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0.5rem 0.25rem;
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.navbar__link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #0077b5, #4dabf7);
+  transition: width 0.3s ease, transform 0.3s ease;
+  transform-origin: bottom left;
+}
+
+.navbar__link:hover::after,
+.navbar__link.active::after {
+  width: 100%;
+}
+
+.navbar__link:active {
+  transform: scale(0.96);
+}
+
+.navbar__link.active {
+  font-weight: 600;
+  color: #0077b5;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 70px;
 }
