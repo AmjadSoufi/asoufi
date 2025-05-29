@@ -41,8 +41,11 @@ if (themeToggle) {
   });
 }
 
-gsap.from(".header,.hero__text", {
-  duration: 1,
-  ease: "circ.out",
-  y: -250,
-});
+gsap.from(
+  ".header,.hero__text,.skills,.projects,.contact,.hero__social-icons",
+  {
+    duration: 1,
+    ease: "circ.out",
+    y: -250,
+  }
+);
