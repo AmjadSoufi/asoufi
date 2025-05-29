@@ -32,7 +32,7 @@
 
         <nav class="header__navbar navbar" aria-label="Primary navigation">
           <a href="#home" class="navbar__link">Home</a>
-          <a href="#about" class="navbar__link">About</a>
+          <a href="#about" class="navbar__link">Skills</a>
           <a href="#projects" class="navbar__link">Projects</a>
           <a href="#contact" class="navbar__link">Contact</a>
         </nav>
@@ -43,28 +43,26 @@
         aria-expanded="false"
         aria-controls="primary-navigation"
       >
-        <span class="hamburger__bar"></span>
-        <span class="hamburger__bar"></span>
-        <span class="hamburger__bar"></span>
+        <div class="hamburger__inner">
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+          <span class="hamburger__bar"></span>
+        </div>
       </button>
     </header>
 
     <main>
       <section class="hero" id="home">
-        <img
-          src="static/images/hero-1.png"
-          alt="Portrait of Amjad Soufi"
-          class="hero__image"
-        />
-
         <section class="hero__text">
           <h1 class="hero__title">Hi, It's Amjad Soufi</h1>
           <p class="hero__description">
-            I am a junior programmer who loves learning and growing in the tech
-            world. I pick up new challenges quickly and get tasks done
-            efficiently with good attention to detail. I like to take
-            initiative, learn new technologies, and always aim to be a helpful
-            and positive team member.
+            I am a junior programmer passionate about learning and growing in
+            the tech world. I quickly pick up new challenges and complete tasks
+            efficiently with strong attention to detail. I enjoy taking
+            initiative, exploring new technologies, and always strive to be a
+            helpful and positive team member. I have experience with fullstack
+            development, allowing me to work confidently on both front-end and
+            back-end projects.
           </p>
         </section>
 
@@ -202,7 +200,7 @@
       <section id="projects" class="projects autoShow">
         <h2 class="projects__title">Projects</h2>
         <ul class="projects__list">
-          <li class="projects__item">
+          <li class="projects__item" data-project="make-it-happen">
             <div class="projects__image-container">
               <img
                 src="./static/images/make-it-happen.png"
@@ -217,16 +215,15 @@
                 A university project focused on creating a practical and
                 user-friendly to-do list application for daily task management.
               </p>
-              <a
-                href="https://github.com/pgmgent-pgm-3/make-it-happen-AmjadSoufi"
+              <button
                 class="projects__item-link"
-                target="_blank"
-                rel="noopener"
-                >View Code</a
+                onclick="openModal('make-it-happen')"
               >
+                View Details
+              </button>
             </div>
           </li>
-          <li class="projects__item">
+          <li class="projects__item" data-project="best-of-2024">
             <div class="projects__image-container">
               <img
                 src="./static/images/best-of-2024.png"
@@ -241,16 +238,15 @@
                 A university project showcasing the best movies, albums, series,
                 games, and music of 2024.
               </p>
-              <a
-                href="https://github.com/pgm-2425-atwork-1/project-2-AmjadSoufi"
+              <button
                 class="projects__item-link"
-                target="_blank"
-                rel="noopener"
-                >View Code</a
+                onclick="openModal('best-of-2024')"
               >
+                View Details
+              </button>
             </div>
           </li>
-          <li class="projects__item">
+          <li class="projects__item" data-project="memory-game">
             <div class="projects__image-container">
               <img
                 src="./static/images/Memory-game.png"
@@ -267,25 +263,78 @@
                 programming works, and providing a tutorial to create the same
                 game we developed.
               </p>
-              <a
-                href="https://github.com/pgmgent-atwork2/project-1-workshop-start-to-code-amjad-serdar"
+              <button
                 class="projects__item-link"
-                target="_blank"
-                rel="noopener"
-                >View Code</a
+                onclick="openModal('memory-game')"
               >
+                View Details
+              </button>
             </div>
           </li>
         </ul>
       </section>
 
-      <section id="contact" class="contact"></section>
+      <div id="projectModal" class="modal">
+        <div class="modal__overlay" onclick="closeModal()"></div>
+        <div class="modal__content">
+          <button class="modal__close" onclick="closeModal()">&times;</button>
+          <div class="modal__header">
+            <img id="modalImage" src="" alt="" class="modal__image" />
+            <div class="modal__header-info">
+              <span id="modalCategory" class="modal__category"></span>
+              <h2 id="modalTitle" class="modal__title"></h2>
+            </div>
+          </div>
+          <div class="modal__body">
+            <div class="modal__description">
+              <h3>Project Description</h3>
+              <p id="modalDescription"></p>
+            </div>
+            <div class="modal__details">
+              <h3>Project Details</h3>
+              <div id="modalTechnologies" class="modal__technologies"></div>
+              <div id="modalFeatures" class="modal__features"></div>
+            </div>
+            <div class="modal__actions">
+              <a
+                id="modalGithubLink"
+                href=""
+                target="_blank"
+                rel="noopener"
+                class="modal__button modal__button--primary"
+              >
+                View Code on GitHub
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <section id="contact" class="contact">
+        <h2 class="contact__title">Contact Information</h2>
+        <div class="contact__card">
+          <div class="contact__row">
+            <span class="contact__label">Name:</span>
+            <span class="contact__value">Amjad Soufi</span>
+          </div>
+          <div class="contact__row">
+            <span class="contact__label">Email:</span>
+            <a
+              class="contact__value contact__link"
+              href="mailto:amjad.soufi@student.arteveldehs.be"
+              >amjad.soufi@student.arteveldehs.be</a
+            >
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="footer">
       <p class="footer__copyright">&copy; 2025 Amjad. All rights reserved.</p>
     </footer>
 
-    <script src="static/js/elements.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="static/js/main.js"></script>
+    <script src="static/js/project.js"></script>
   </body>
 </html>
