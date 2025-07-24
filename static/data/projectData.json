@@ -70,5 +70,44 @@
       "Responsive game interface"
     ],
     "githubLink": "https://github.com/pgmgent-atwork2/project-1-workshop-start-to-code-amjad-serdar"
+  },
+  "kanban-project": {
+    "title": "Kanban Project Management Application",
+    "category": "Web Application",
+    "image": "./static/images/Kanban.png",
+    "description": "A modern Kanban-style project management application built with React and Strapi. Features include project and task management, backlog, real-time updates, and a responsive UI.",
+    "technologies": [
+      "React",
+      "React Router",
+      "React Query",
+      "CSS3",
+      "Strapi",
+      "RESTful API"
+    ],
+    "features": [
+      "Create and manage multiple projects",
+      "Task management with status updates",
+      "Backlog with pagination",
+      "Filter and search tasks",
+      "Modern, responsive, mobile-friendly UI",
+      "Real-time updates"
+    ],
+    "githubLink": "https://github.com/pgm-2425-programming-4/final-project-AmjadSoufi",
+    "liveDemo": "https://prismatic-llama-08c1d7.netlify.app/"
+  },
+  "byteflow": {
+    "title": "ByteFlow",
+    "category": "Web Application",
+    "image": "./static/images/best-of-2024.png",
+    "description": "A university project focused on advanced web development concepts and modern application design. ByteFlow demonstrates robust architecture, user-friendly features, and a clean, responsive interface.",
+    "technologies": ["HTML5", "CSS3", "JavaScript", "Modern Web APIs"],
+    "features": [
+      "Advanced web application structure",
+      "User authentication and management",
+      "Responsive and accessible design",
+      "Interactive UI components",
+      "Clean and maintainable codebase"
+    ],
+    "githubLink": "https://github.com/pgmgent-atwork2/project-2-werkstuk-byteflow"
   }
 }

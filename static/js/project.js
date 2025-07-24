@@ -67,6 +67,7 @@ function openModal(projectId) {
   const modalTitle = document.getElementById("modalTitle");
   const modalDescription = document.getElementById("modalDescription");
   const modalGithubLink = document.getElementById("modalGithubLink");
+  const modalLiveDemoLink = document.getElementById("modalLiveDemoLink");
 
   if (modalImage) {
     modalImage.src = project.image;
@@ -101,6 +102,15 @@ function openModal(projectId) {
 
   if (modalGithubLink) {
     modalGithubLink.href = project.githubLink;
+  }
+  if (modalLiveDemoLink) {
+    if (project.liveDemo) {
+      modalLiveDemoLink.href = project.liveDemo;
+      modalLiveDemoLink.style.display = "inline-block";
+    } else {
+      modalLiveDemoLink.href = "";
+      modalLiveDemoLink.style.display = "none";
+    }
   }
 
   modal.style.display = "flex";
