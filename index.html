@@ -200,6 +200,32 @@
       <section id="projects" class="projects autoShow">
         <h2 class="projects__title">Projects</h2>
         <ul class="projects__list">
+          <li class="projects__item" data-project="kanban-project">
+            <div class="projects__image-container">
+              <img
+                src="./static/images/Kanban.png"
+                alt="Screenshot of Kanban Project Management Application"
+                class="projects__image"
+              />
+              <span class="projects__category">KANBAN</span>
+            </div>
+            <div class="projects__content">
+              <h3 class="projects__item-title">
+                Kanban Project Management Application
+              </h3>
+              <p class="projects__item-description">
+                A modern Kanban-style project management app built with React
+                and Strapi. Features project/task management, backlog, real-time
+                updates, and a responsive UI.
+              </p>
+              <button
+                class="projects__item-link"
+                onclick="openModal('kanban-project')"
+              >
+                View Details
+              </button>
+            </div>
+          </li>
           <li class="projects__item" data-project="make-it-happen">
             <div class="projects__image-container">
               <img
@@ -271,28 +297,26 @@
               </button>
             </div>
           </li>
-          <li class="projects__item" data-project="kanban-project">
+          <li class="projects__item" data-project="kpog">
             <div class="projects__image-container">
               <img
-                src="./static/images/Kanban.png"
-                alt="Screenshot of Kanban Project Management Application"
+                src="./static/images/Kpog.png"
+                alt="Screenshot of KPOG project"
                 class="projects__image"
               />
-              <span class="projects__category">Web Application</span>
+              <span class="projects__category">KPOG</span>
             </div>
             <div class="projects__content">
-              <h3 class="projects__item-title">
-                Kanban Project Management Application
-              </h3>
+              <h3 class="projects__item-title">KPOG</h3>
               <p class="projects__item-description">
-                A modern Kanban-style project management app built with React
-                and Strapi. Features project/task management, backlog, real-time
-                updates, and a responsive UI.
+                KPOG is a web application developed as part of a university
+                project. The project focuses on building a modern, scalable, and
+                user-friendly web platform using the latest web technologies.
+                The application demonstrates advanced features, clean code
+                architecture, and a responsive design, providing a robust
+                foundation for further development and customization.
               </p>
-              <button
-                class="projects__item-link"
-                onclick="openModal('kanban-project')"
-              >
+              <button class="projects__item-link" onclick="openModal('kpog')">
                 View Details
               </button>
             </div>
