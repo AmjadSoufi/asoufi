@@ -128,15 +128,17 @@ function initAnimations() {
   });
 
   // Skills Stagger
-  gsap.from(".skill-card", {
+  gsap.set(".skill-card", { y: 30, opacity: 0 });
+  
+  gsap.to(".skill-card", {
     scrollTrigger: {
       trigger: ".skills__grid",
       start: "top 85%"
     },
-    y: 30,
-    opacity: 0,
+    y: 0,
+    opacity: 1,
     duration: 0.6,
-    stagger: 0.05, // Faster stagger
+    stagger: 0.1,
     ease: "power2.out"
   });
 }
