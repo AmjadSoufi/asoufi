@@ -1,126 +1,23 @@
-.autoShow {
-  animation: autoShowAnimation both;
-  animation-timeline: view(70% -70%);
+/* Fade In Up */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
-@keyframes autoShowAnimation {
-  from {
-    opacity: 0;
-    transform: translateY(200px) scale(0.3);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
-.skills-slider {
-  --width: 120px;
-  --height: 120px;
-  --quantity: 11;
-  width: 100%;
-  height: var(--height);
-  overflow: hidden;
-  mask-image: linear-gradient(to right, transparent, #000 10% 90%, transparent);
-}
+/* Delays */
+.delay-1 { transition-delay: 0.1s; }
+.delay-2 { transition-delay: 0.2s; }
+.delay-3 { transition-delay: 0.3s; }
+.delay-4 { transition-delay: 0.4s; }
 
-.skills-slider .list {
-  display: flex;
-  width: 100%;
-  min-width: calc(var(--width) * var(--quantity));
-  position: relative;
-}
-
-.skills-slider .list .item {
-  width: var(--width);
-  height: var(--height);
-  position: absolute;
-  left: 100%;
-  animation: autoRun 11s linear infinite;
-  transition: filter 0.5s;
-  animation-delay: calc(
-    (11s / var(--quantity)) * (var(--position) - 1) - 11s
-  ) !important;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 14px;
-  color: var(--text-color);
-  text-align: center;
-}
-
-.skills-slider .list .item img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  margin-bottom: 6px;
-}
-
-@keyframes autoRun {
-  from {
-    left: 100%;
-  }
-  to {
-    left: calc(var(--width) * -1);
-  }
-}
-
-.skills-slider:hover .item {
-  animation-play-state: paused !important;
-  filter: grayscale(1);
-}
-
-.skills-slider .item:hover {
-  filter: grayscale(0);
-}
-
-.header__navbar {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-}
-
-.navbar__link {
-  position: relative;
-  color: var(--text-color);
-  text-decoration: none;
-  font: 500 1.1rem "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0.5rem 0.25rem;
-  transition: color 0.3s ease, transform 0.3s ease;
-}
-
-.navbar__link::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: linear-gradient(
-    90deg,
-    var(--primary-gradient-start),
-    var(--primary-gradient-end)
-  );
-  transition: width 0.3s ease, transform 0.3s ease;
-  transform-origin: bottom left;
-}
-
-.navbar__link:hover::after,
-.navbar__link.active::after {
-  width: 100%;
-}
-
-.navbar__link:active {
-  transform: scale(0.96);
-}
-
-.navbar__link.active {
-  font-weight: 600;
-  color: var(--primary-color);
-}
-
-html {
-  scroll-behavior: smooth;
-  scroll-padding-top: 70px;
+/* Staggered Grid Animation (handled by JS usually, but here's a helper) */
+.stagger-item {
+  opacity: 0;
+  transform: translateY(20px);
 }

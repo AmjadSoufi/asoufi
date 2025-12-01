@@ -3,363 +3,279 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Amjad - Portfolio | Amjad Soufi | Web Developer</title>
+    <title>Amjad Soufi | Full Stack Developer</title>
     <meta
       name="description"
-      content="Amjad - Junior programmer passionate about web development, React, and fullstack projects. Amjad Soufi portfolio with web development skills and projects. asoufi.com"
+      content="Amjad Soufi - Full Stack Developer specializing in building exceptional digital experiences. Expert in React, Node.js, and modern web technologies."
     />
-    <meta name="keywords" content="amjad, Amjad, Amjad Soufi, amjad soufi" />
+    <meta name="keywords" content="Amjad Soufi, Full Stack Developer, React, Node.js, Web Development, Portfolio" />
     <meta name="author" content="Amjad Soufi" />
-    <link rel="canonical" href="https://asoufi.com/" />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://asoufi.com/" />
-    <meta
-      property="og:title"
-      content="Amjad - Portfolio | Amjad Soufi | Web Developer"
-    />
-    <meta
-      property="og:description"
-      content="Amjad - Junior programmer passionate about web development, React, and fullstack projects. Amjad Soufi portfolio with web development skills and projects."
-    />
-    <meta
-      property="og:image"
-      content="https://asoufi.com/static/images/Kanban.png"
-    />
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:url" content="https://asoufi.com/" />
-    <meta
-      name="twitter:title"
-      content="Amjad - Portfolio | Amjad Soufi | Web Developer"
-    />
-    <meta
-      name="twitter:description"
-      content="Amjad - Junior programmer passionate about web development, React, and fullstack projects. Amjad Soufi portfolio with web development skills and projects."
-    />
-    <meta
-      name="twitter:image"
-      content="https://asoufi.com/static/images/Kanban.png"
-    />
-    <link rel="stylesheet" href="static/css/main.css" />
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="static/css/global.css" />
+    <link rel="stylesheet" href="static/css/header.css" />
+    <link rel="stylesheet" href="static/css/hero.css" />
+    <link rel="stylesheet" href="static/css/skills.css" />
+    <link rel="stylesheet" href="static/css/projects.css" />
+    <link rel="stylesheet" href="static/css/contact.css" />
+    <link rel="stylesheet" href="static/css/animation.css" />
   </head>
   <body>
-    <header class="header">
-      <a href="#" class="header__logo">Amjad</a>
-      <div class="header__right-section">
-        <label class="theme-switch" for="theme-toggle">
-          <input
-            type="checkbox"
-            id="theme-toggle"
-            class="theme-switch__input"
-          />
-          <span class="theme-switch__label">
-            <i
-              class="theme-switch__icon theme-switch__icon--moon"
-              aria-hidden="true"
-              >🌙</i
-            >
-            <i
-              class="theme-switch__icon theme-switch__icon--sun"
-              aria-hidden="true"
-              >☀️</i
-            >
-          </span>
-        </label>
+    <div class="cursor-dot" data-cursor-dot></div>
+    <div class="cursor-outline" data-cursor-outline></div>
 
-        <nav class="header__navbar navbar" aria-label="Primary navigation">
-          <a href="#home" class="navbar__link">Home</a>
-          <a href="#about" class="navbar__link">Skills</a>
-          <a href="#projects" class="navbar__link">Projects</a>
-          <a href="#contact" class="navbar__link">Contact</a>
+    <header class="header">
+      <div class="header__container">
+        <a href="#" class="header__logo">AS<span class="accent">.</span></a>
+        
+        <nav class="header__nav">
+          <ul class="header__menu">
+            <li><a href="#home" class="header__link active">Home</a></li>
+            <li><a href="#about" class="header__link">About</a></li>
+            <li><a href="#skills" class="header__link">Skills</a></li>
+            <li><a href="#projects" class="header__link">Work</a></li>
+            <li><a href="#contact" class="header__link">Contact</a></li>
+          </ul>
         </nav>
+
+        <button class="header__hamburger" aria-label="Menu">
+          <span></span>
+          <span></span>
+        </button>
       </div>
-      <button
-        class="header__hamburger hamburger"
-        aria-label="Menu"
-        aria-expanded="false"
-        aria-controls="primary-navigation"
-      >
-        <div class="hamburger__inner">
-          <span class="hamburger__bar"></span>
-          <span class="hamburger__bar"></span>
-          <span class="hamburger__bar"></span>
-        </div>
-      </button>
     </header>
 
     <main>
-      <section class="hero" id="home">
-        <section class="hero__text">
-          <h1 class="hero__title">Hi, It's Amjad Soufi</h1>
-          <p class="hero__description">
-            I am a junior programmer passionate about learning and growing in
-            the tech world. I quickly pick up new challenges and complete tasks
-            efficiently with strong attention to detail. I enjoy taking
-            initiative, exploring new technologies, and always strive to be a
-            helpful and positive team member. I have experience with fullstack
-            development, allowing me to work confidently on both front-end and
-            back-end projects.
+      <section id="home" class="hero">
+        <div class="hero__bg-elements">
+          <div class="hero__blob hero__blob--1"></div>
+          <div class="hero__blob hero__blob--2"></div>
+        </div>
+        
+        <div class="hero__content container">
+          <span class="hero__subtitle fade-in-up">Hello, I'm Amjad</span>
+          <h1 class="hero__title fade-in-up delay-1">
+            Building <span class="text-gradient">Digital</span><br />
+            Experiences
+          </h1>
+          <p class="hero__description fade-in-up delay-2">
+            I'm a Full Stack Developer passionate about crafting accessible, pixel-perfect, and performant web applications.
           </p>
-        </section>
-
-        <nav
-          id="about"
-          class="hero__social-icons social-icons"
-          aria-label="Social media links"
-        >
-          <a
-            href="https://github.com/AmjadSoufi"
-            class="social-icons__link"
-            target="_blank"
-            rel="noopener"
-            aria-label="GitHub"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 496 512"
-              class="social-icons__icon"
-              role="img"
-              aria-hidden="true"
-            >
-              <path
-                d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3 .3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5 .3-6.2 2.3zm44.2-1.7c-2.9 .7-4.9 2.6-4.6 4.9 .3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3 .7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3 .3 2.9 2.3 3.9 1.6 1 3.6 .7 4.3-.7 .7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3 .7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3 .7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"
-              />
-            </svg>
-          </a>
-          <a
-            href="https://be.linkedin.com/in/amjad-soufi-57794b316"
-            class="social-icons__link"
-            target="_blank"
-            rel="noopener"
-            aria-label="LinkedIn"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 448 512"
-              class="social-icons__icon"
-              role="img"
-              aria-hidden="true"
-            >
-              <path
-                d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9V416z"
-              />
-            </svg>
-          </a>
-        </nav>
+          <div class="hero__actions fade-in-up delay-3">
+            <a href="#projects" class="btn btn--primary">View My Work</a>
+            <a href="#contact" class="btn btn--outline">Contact Me</a>
+          </div>
+          
+          <div class="hero__socials fade-in-up delay-4">
+            <a href="https://github.com/AmjadSoufi" target="_blank" rel="noopener" aria-label="GitHub">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://be.linkedin.com/in/amjad-soufi-57794b316" target="_blank" rel="noopener" aria-label="LinkedIn">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+            </a>
+          </div>
+        </div>
+        
+        <div class="hero__scroll-down">
+          <span class="mouse">
+            <span class="wheel"></span>
+          </span>
+        </div>
       </section>
 
-      <section id="skills" class="skills">
-        <h2 class="skills__title autoShow">Skills</h2>
-        <div class="skills-slider autoShow">
-          <div class="list">
-            <div class="item" style="--position: 1">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/sass-1.svg"
-                alt="SASS logo"
-              />
-              <p>SASS</p>
-            </div>
-            <div class="item" style="--position: 2">
-              <img
-                src="https://cdn.sanity.io/images/setp5dh3/production/d7195e29b5341239238068e47552ca13b1d1dc04-512x512.png"
-                alt="Tailwind CSS logo"
-              />
-              <p>Tailwind</p>
-            </div>
-            <div class="item" style="--position: 3">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/css-3.svg"
-                alt="CSS3 logo"
-              />
-              <p>CSS3</p>
-            </div>
-            <div class="item" style="--position: 4">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/react-1.svg"
-                alt="React JS logo"
-              />
-              <p>React JS</p>
-            </div>
-            <div class="item" style="--position: 5">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/git-icon.svg"
-                alt="Git logo"
-              />
-              <p>Git</p>
-            </div>
-            <div class="item" style="--position: 6">
-              <img
-                src="https://cdn.sanity.io/images/setp5dh3/production/66bbf9242b1ccffebb5d46f376f5036b527fad48-480x480.png"
-                alt="JavaScript logo"
-              />
-              <p>JavaScript</p>
-            </div>
-            <div class="item" style="--position: 7">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/html-1.svg"
-                alt="HTML5 logo"
-              />
-              <p>HTML</p>
-            </div>
-            <div class="item" style="--position: 8">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/typescript.svg"
-                alt="TypeScript logo"
-              />
-              <p>TypeScript</p>
-            </div>
-            <div class="item" style="--position: 9">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/nodejs-icon.svg"
-                alt="Node.js logo"
-              />
-              <p>Node JS</p>
-            </div>
-            <div class="item" style="--position: 10">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/bootstrap-4.svg"
-                alt="Bootstrap logo"
-              />
-              <p>Bootstrap</p>
-            </div>
-            <div class="item" style="--position: 11">
-              <img
-                src="https://cdn.worldvectorlogo.com/logos/react-native-1.svg"
-                alt="React Native logo"
-              />
-              <p>React Native</p>
+      <section id="about" class="about section">
+        <div class="container">
+          <h2 class="section__title fade-in-up">About Me</h2>
+          <div class="about__content">
+            <div class="about__text fade-in-up">
+              <p>
+                I am a junior programmer passionate about learning and growing in the tech world. I quickly pick up new challenges and complete tasks efficiently with strong attention to detail.
+              </p>
+              <p>
+                I enjoy taking initiative, exploring new technologies, and always strive to be a helpful and positive team member. I have experience with fullstack development, allowing me to work confidently on both front-end and back-end projects.
+              </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="projects" class="projects autoShow">
-        <h2 class="projects__title">Projects</h2>
-        <ul class="projects__list">
-          <li class="projects__item" data-project="kanban-project">
-            <div class="projects__image-container">
-              <img
-                src="./static/images/Kanban.png"
-                alt="Screenshot of Kanban Project Management Application"
-                class="projects__image"
-              />
-              <span class="projects__category">KANBAN</span>
+      <section id="skills" class="skills section">
+        <div class="container">
+          <h2 class="section__title fade-in-up">My Skills</h2>
+          <div class="skills__grid">
+            <!-- Skills will be populated by JS or static HTML -->
+            <div class="skill-card fade-in-up">
+              <i class="devicon-html5-plain colored"></i>
+              <span>HTML5</span>
             </div>
-            <div class="projects__content">
-              <h3 class="projects__item-title">
-                Kanban Project Management Application
-              </h3>
-              <p class="projects__item-description">
-                A modern Kanban-style project management app built with React
-                and Strapi. Features project/task management, backlog, real-time
-                updates, and a responsive UI.
-              </p>
-              <button
-                class="projects__item-link"
-                onclick="openModal('kanban-project')"
-              >
-                View Details
-              </button>
+            <div class="skill-card fade-in-up">
+              <i class="devicon-css3-plain colored"></i>
+              <span>CSS3</span>
             </div>
-          </li>
-          <li class="projects__item" data-project="make-it-happen">
-            <div class="projects__image-container">
-              <img
-                src="./static/images/make-it-happen.png"
-                alt="Screenshot of Make It Happen project"
-                class="projects__image"
-              />
-              <span class="projects__category">To-Do App</span>
+            <div class="skill-card fade-in-up">
+              <i class="devicon-javascript-plain colored"></i>
+              <span>JavaScript</span>
             </div>
-            <div class="projects__content">
-              <h3 class="projects__item-title">Make It Happen</h3>
-              <p class="projects__item-description">
-                A university project focused on creating a practical and
-                user-friendly to-do list application for daily task management.
-              </p>
-              <button
-                class="projects__item-link"
-                onclick="openModal('make-it-happen')"
-              >
-                View Details
-              </button>
+            <div class="skill-card fade-in-up">
+              <i class="devicon-react-original colored"></i>
+              <span>React</span>
             </div>
-          </li>
-          <li class="projects__item" data-project="best-of-2024">
-            <div class="projects__image-container">
-              <img
-                src="./static/images/best-of-2024.png"
-                alt="Screenshot of Best of 2024 project"
-                class="projects__image"
-              />
-              <span class="projects__category">Showcase</span>
+            <div class="skill-card fade-in-up">
+              <i class="devicon-nodejs-plain colored"></i>
+              <span>Node.js</span>
             </div>
-            <div class="projects__content">
-              <h3 class="projects__item-title">Best of 2024</h3>
-              <p class="projects__item-description">
-                A university project showcasing the best movies, albums, series,
-                games, and music of 2024.
-              </p>
-              <button
-                class="projects__item-link"
-                onclick="openModal('best-of-2024')"
-              >
-                View Details
-              </button>
+            <div class="skill-card fade-in-up">
+              <i class="devicon-typescript-plain colored"></i>
+              <span>TypeScript</span>
             </div>
-          </li>
-          <li class="projects__item" data-project="memory-game">
-            <div class="projects__image-container">
-              <img
-                src="./static/images/Memory-game.png"
-                alt="Screenshot of Memory Game project"
-                class="projects__image"
-              />
-              <span class="projects__category">Game</span>
+            <div class="skill-card fade-in-up">
+              <i class="devicon-sass-original colored"></i>
+              <span>Sass</span>
             </div>
-            <div class="projects__content">
-              <h3 class="projects__item-title">Memory Game</h3>
-              <p class="projects__item-description">
-                A university project designed for new students interested in
-                programming, introducing the languages we use, explaining how
-                programming works, and providing a tutorial to create the same
-                game we developed.
-              </p>
-              <button
-                class="projects__item-link"
-                onclick="openModal('memory-game')"
-              >
-                View Details
-              </button>
+            <div class="skill-card fade-in-up">
+              <i class="devicon-git-plain colored"></i>
+              <span>Git</span>
             </div>
-          </li>
-          <li class="projects__item" data-project="kpog">
-            <div class="projects__image-container">
-              <img
-                src="./static/images/Kpog.png"
-                alt="Screenshot of KPOG project"
-                class="projects__image"
-              />
-              <span class="projects__category">KPOG</span>
-            </div>
-            <div class="projects__content">
-              <h3 class="projects__item-title">KPOG</h3>
-              <p class="projects__item-description">
-                KPOG is a web application developed as part of a university
-                project. The project focuses on building a modern, scalable, and
-                user-friendly web platform using the latest web technologies.
-                The application demonstrates advanced features, clean code
-                architecture, and a responsive design, providing a robust
-                foundation for further development and customization.
-              </p>
-              <button class="projects__item-link" onclick="openModal('kpog')">
-                View Details
-              </button>
-            </div>
-          </li>
-        </ul>
+          </div>
+        </div>
       </section>
 
-      <div id="projectModal" class="modal">
+      <section id="projects" class="projects section">
+        <div class="container">
+          <h2 class="section__title fade-in-up">Featured Projects</h2>
+          <div class="projects__grid">
+            <!-- Project 1 -->
+            <article class="project-card fade-in-up">
+              <div class="project-card__image">
+                <img src="./static/images/Kanban.png" alt="Kanban Project" loading="lazy">
+                <div class="project-card__overlay">
+                  <div class="project-card__links">
+                    <button class="btn btn--sm btn--white" onclick="openModal('kanban-project')">Details</button>
+                  </div>
+                </div>
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">Kanban App</h3>
+                <p class="project-card__desc">A modern Kanban-style project management app built with React and Strapi.</p>
+                <div class="project-card__tags">
+                  <span>React</span>
+                  <span>Strapi</span>
+                  <span>Sass</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 2 -->
+            <article class="project-card fade-in-up">
+              <div class="project-card__image">
+                <img src="./static/images/make-it-happen.png" alt="Make It Happen" loading="lazy">
+                <div class="project-card__overlay">
+                  <div class="project-card__links">
+                    <button class="btn btn--sm btn--white" onclick="openModal('make-it-happen')">Details</button>
+                  </div>
+                </div>
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">Make It Happen</h3>
+                <p class="project-card__desc">A practical and user-friendly to-do list application for daily task management.</p>
+                <div class="project-card__tags">
+                  <span>JS</span>
+                  <span>HTML</span>
+                  <span>CSS</span>
+                </div>
+              </div>
+            </article>
+
+            <!-- Project 3 -->
+            <article class="project-card fade-in-up">
+              <div class="project-card__image">
+                <img src="./static/images/best-of-2024.png" alt="Best of 2024" loading="lazy">
+                <div class="project-card__overlay">
+                  <div class="project-card__links">
+                    <button class="btn btn--sm btn--white" onclick="openModal('best-of-2024')">Details</button>
+                  </div>
+                </div>
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">Best of 2024</h3>
+                <p class="project-card__desc">A showcase of the best movies, albums, series, games, and music of 2024.</p>
+                <div class="project-card__tags">
+                  <span>Design</span>
+                  <span>HTML</span>
+                  <span>CSS</span>
+                </div>
+              </div>
+            </article>
+            
+             <!-- Project 4 -->
+            <article class="project-card fade-in-up">
+              <div class="project-card__image">
+                <img src="./static/images/Memory-game.png" alt="Memory Game" loading="lazy">
+                <div class="project-card__overlay">
+                  <div class="project-card__links">
+                    <button class="btn btn--sm btn--white" onclick="openModal('memory-game')">Details</button>
+                  </div>
+                </div>
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">Memory Game</h3>
+                <p class="project-card__desc">A game designed for new students interested in programming.</p>
+                <div class="project-card__tags">
+                  <span>JS</span>
+                  <span>Game Logic</span>
+                </div>
+              </div>
+            </article>
+
+             <!-- Project 5 -->
+            <article class="project-card fade-in-up">
+              <div class="project-card__image">
+                <img src="./static/images/Kpog.png" alt="KPOG" loading="lazy">
+                <div class="project-card__overlay">
+                  <div class="project-card__links">
+                    <button class="btn btn--sm btn--white" onclick="openModal('kpog')">Details</button>
+                  </div>
+                </div>
+              </div>
+              <div class="project-card__content">
+                <h3 class="project-card__title">KPOG</h3>
+                <p class="project-card__desc">A modern, scalable, and user-friendly web platform.</p>
+                <div class="project-card__tags">
+                  <span>Web App</span>
+                  <span>Scalable</span>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="contact" class="contact section">
+        <div class="container">
+          <div class="contact__wrapper fade-in-up">
+            <h2 class="section__title">Get In Touch</h2>
+            <p class="contact__text">
+              I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+            </p>
+            <a href="mailto:amjad.soufi@student.arteveldehs.be" class="btn btn--primary btn--lg">Say Hello</a>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <div class="container">
+        <p class="footer__copyright">&copy; 2025 Amjad Soufi. Built with passion.</p>
+      </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="projectModal" class="modal">
         <div class="modal__overlay" onclick="closeModal()"></div>
         <div class="modal__content">
           <button class="modal__close" onclick="closeModal()">&times;</button>
@@ -405,30 +321,9 @@
         </div>
       </div>
 
-      <section id="contact" class="contact">
-        <h2 class="contact__title">Contact Information</h2>
-        <div class="contact__card">
-          <div class="contact__row">
-            <span class="contact__label">Name:</span>
-            <span class="contact__value">Amjad Soufi</span>
-          </div>
-          <div class="contact__row">
-            <span class="contact__label">Email:</span>
-            <a
-              class="contact__value contact__link"
-              href="mailto:amjad.soufi@student.arteveldehs.be"
-              >amjad.soufi@student.arteveldehs.be</a
-            >
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="footer">
-      <p class="footer__copyright">&copy; 2025 Amjad. All rights reserved.</p>
-    </footer>
-
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
     <script src="static/js/main.js"></script>
     <script src="static/js/project.js"></script>
   </body>
