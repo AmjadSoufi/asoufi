@@ -10,8 +10,9 @@
 
 .header.scrolled {
   padding: 1rem 0;
-  background: rgba(10, 10, 10, 0.85); /* Slightly more opaque to reduce reliance on blur */
-  backdrop-filter: blur(8px); /* Reduced blur radius for performance */
+  background-color: #0a0a0a; /* Fallback for browsers without backdrop-filter */
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
   border-bottom: 1px solid var(--glass-border);
   box-shadow: var(--shadow-sm);
@@ -112,17 +113,7 @@
   opacity: 0;
 }
 
-.header__hamburger.active span:nth-child(3) { /* Assuming 3 bars usually, but here 2 in HTML? Let's stick to 2 for now based on HTML or adjust CSS */
-   /* Wait, HTML had 2 spans. Let's adjust CSS for 2 spans or update HTML. 
-      HTML: 
-        <button class="header__hamburger" aria-label="Menu">
-          <span></span>
-          <span></span>
-        </button>
-      Let's stick to 2 bars for a modern look or add a third. 
-      Actually, 2 bars is fine for a cross.
-   */
-}
+
 
 .header__hamburger.active span:nth-child(1) {
   transform: rotate(45deg) translate(1px, 0px); /* Adjusted for 2 bars centered */
