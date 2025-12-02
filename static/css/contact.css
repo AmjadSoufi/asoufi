@@ -1,13 +1,15 @@
 .contact__wrapper {
-  background: var(--surface-color);
-  padding: 4rem 2rem;
-  border-radius: var(--radius-lg);
+  background: transparent;
+  padding: 6rem 2rem;
+  border-radius: 0;
   text-align: center;
-  border: 1px solid var(--glass-border);
+  border: none;
   max-width: 800px;
   margin: 0 auto;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
+  backdrop-filter: none;
+  box-shadow: none;
 }
 
 .contact__wrapper::before {
