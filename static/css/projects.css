@@ -247,3 +247,28 @@
   background: var(--accent-secondary);
   transform: translateY(-2px);
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .projects__grid {
+    grid-template-columns: 1fr; /* Stack cards vertically */
+    gap: 3rem;
+  }
+
+  .project-card {
+    max-width: 100%;
+  }
+
+  .project-card__image {
+    aspect-ratio: 16/9; /* Slightly wider on mobile for better view */
+  }
+
+  .project-card__title {
+    font-size: 1.5rem;
+  }
+
+  .project-card__desc {
+    font-size: 0.95rem;
+    max-width: 100%;
+  }
+}

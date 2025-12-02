@@ -123,3 +123,64 @@
   font-size: 1.1rem;
   color: var(--text-secondary);
 }
+
+/* Mobile Responsive Styles */
+@media (max-width: 768px) {
+  .hero {
+    padding-top: calc(var(--header-height) + 2rem);
+    min-height: 100vh;
+    align-items: flex-start;
+  }
+
+  .hero__content {
+    padding: 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: calc(100vh - var(--header-height));
+  }
+
+  .hero__subtitle {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .hero__title {
+    font-size: 3.5rem; /* Reduced from clamp(4rem...) */
+    line-height: 1.1;
+    margin-bottom: 2rem;
+  }
+
+  .hero__description {
+    font-size: 1.1rem;
+    margin-bottom: 3rem;
+    max-width: 100%;
+  }
+
+  .hero__actions {
+    flex-direction: column;
+    width: 100%;
+    gap: 1rem;
+    margin-bottom: 4rem;
+  }
+
+  .btn {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__socials {
+    position: relative;
+    right: auto;
+    bottom: auto;
+    margin-top: auto;
+    justify-content: center;
+    width: 100%;
+    padding-bottom: 2rem;
+  }
+
+  .hero__scroll-down {
+    display: none; /* Hide scroll indicator on mobile to save space */
+  }
+}
