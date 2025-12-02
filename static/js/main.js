@@ -1,4 +1,3 @@
-// Register ScrollTrigger
 gsap.registerPlugin(ScrollTrigger);
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -8,14 +7,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initMobileMenu();
 });
 
-// Custom Cursor - Optimized with requestAnimationFrame
 function initCursor() {
   const cursorDot = document.querySelector('[data-cursor-dot]');
   const cursorOutline = document.querySelector('[data-cursor-outline]');
 
   if (!cursorDot || !cursorOutline) return;
 
-  // Hide default cursor
   document.body.style.cursor = 'none';
 
   let mouseX = 0;
@@ -27,14 +24,11 @@ function initCursor() {
     mouseX = e.clientX;
     mouseY = e.clientY;
     
-    // Update dot immediately for responsiveness
     cursorDot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
   });
 
-  // Smooth follow for outline using rAF loop
   const animateOutline = () => {
-    // Linear interpolation for smooth movement
-    outlineX += (mouseX - outlineX) * 0.15; // increased speed slightly
+    outlineX += (mouseX - outlineX) * 0.15; 
     outlineY += (mouseY - outlineY) * 0.15;
 
     cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) translate(-50%, -50%)`;
@@ -43,12 +37,10 @@ function initCursor() {
   };
   requestAnimationFrame(animateOutline);
 
-  // Hover effects
   const interactiveElements = document.querySelectorAll('a, button, .project-card');
   interactiveElements.forEach(el => {
     el.addEventListener('mouseenter', () => {
       cursorOutline.classList.add('hovered');
-      // Use class for styles instead of inline for better performance
       cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) translate(-50%, -50%) scale(1.5)`;
       cursorOutline.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
     });
@@ -60,7 +52,6 @@ function initCursor() {
   });
 }
 
-// Header Scroll Effect - Throttled
 function initHeader() {
   const header = document.querySelector('.header');
   let lastScrollY = window.scrollY;
@@ -73,7 +64,6 @@ function initHeader() {
       header.classList.remove('scrolled');
     }
     
-    // Active Link Highlighting logic moved here
     updateActiveLinks();
     
     ticking = false;
@@ -95,7 +85,6 @@ function updateActiveLinks() {
   let current = '';
   sections.forEach(section => {
     const sectionTop = section.offsetTop;
-    // const sectionHeight = section.clientHeight; // Unused
     if (window.scrollY >= (sectionTop - 200)) {
       current = section.getAttribute('id');
     }
@@ -109,15 +98,13 @@ function updateActiveLinks() {
   });
 }
 
-// GSAP Animations
 function initAnimations() {
-  // Hero Animations
   const heroElements = document.querySelectorAll('.fade-in-up');
   heroElements.forEach(el => {
     gsap.to(el, {
       scrollTrigger: {
         trigger: el,
-        start: "top 90%", // Trigger earlier
+        start: "top 90%", 
         toggleActions: "play none none reverse"
       },
       opacity: 1,
@@ -127,7 +114,6 @@ function initAnimations() {
     });
   });
 
-  // Skills Stagger
   gsap.set(".skill-card", { y: 30, opacity: 0 });
   
   gsap.to(".skill-card", {
@@ -143,7 +129,6 @@ function initAnimations() {
   });
 }
 
-// Mobile Menu
 function initMobileMenu() {
   const hamburger = document.querySelector('.header__hamburger');
   
@@ -180,7 +165,6 @@ function initMobileMenu() {
   }
 }
 
-// Modal Logic
 window.openModal = function(projectId) {
   const modal = document.getElementById('projectModal');
   const projectData = getProjectData(projectId);
@@ -213,7 +197,6 @@ window.closeModal = function() {
   document.body.style.overflow = '';
 };
 
-// Project Data
 function getProjectData(id) {
   const projects = {
     'kanban-project': {

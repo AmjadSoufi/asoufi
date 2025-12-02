@@ -10,7 +10,7 @@
 
 .header.scrolled {
   padding: 1rem 0;
-  background-color: #0a0a0a; /* Fallback for browsers without backdrop-filter */
+  background-color: #0a0a0a; 
   background: rgba(10, 10, 10, 0.85);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
@@ -116,11 +116,11 @@
 
 
 .header__hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(1px, 0px); /* Adjusted for 2 bars centered */
+  transform: rotate(45deg) translate(1px, 0px); 
   transform-origin: center;
 }
 .header__hamburger.active span:nth-child(2) {
-   transform: rotate(-45deg) translate(1px, -1px); /* Adjusted */
+   transform: rotate(-45deg) translate(1px, -1px); 
    transform-origin: center;
 }
 
