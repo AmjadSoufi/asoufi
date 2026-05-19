@@ -202,7 +202,7 @@ function getProjectData(id) {
     'kanban-project': {
       title: 'Kanban Project Management',
       category: 'Web Application',
-      image: './static/images/Kanban.png',
+      image: './static/images/Kanban.jpg',
       description: 'A comprehensive project management tool inspired by Trello. Users can create boards, lists, and cards to organize tasks efficiently.',
       technologies: ['React', 'Strapi', 'Sass', 'DnD Kit'],
       features: ['Drag and drop tasks', 'User authentication', 'Real-time updates', 'Dark mode'],
@@ -212,7 +212,7 @@ function getProjectData(id) {
     'make-it-happen': {
       title: 'Make It Happen',
       category: 'Productivity',
-      image: './static/images/make-it-happen.png',
+      image: './static/images/make-it-happen.jpg',
       description: 'A minimalist to-do list application designed to help users focus on their daily tasks.',
       technologies: ['HTML', 'CSS', 'JavaScript'],
       features: ['Local storage save', 'Task categorization', 'Progress tracking'],
@@ -222,7 +222,7 @@ function getProjectData(id) {
     'best-of-2024': {
       title: 'Best of 2024',
       category: 'Showcase',
-      image: './static/images/best-of-2024.png',
+      image: './static/images/best-of-2024.jpg',
       description: 'A curated collection of the best entertainment media released in 2024.',
       technologies: ['HTML', 'CSS', 'Responsive Design'],
       features: ['Grid layout', 'Media embedding', 'Smooth transitions'],
@@ -232,7 +232,7 @@ function getProjectData(id) {
     'memory-game': {
       title: 'Memory Game',
       category: 'Game',
-      image: './static/images/Memory-game.png',
+      image: './static/images/Memory-game.jpg',
       description: 'An interactive memory card game to test cognitive skills.',
       technologies: ['JavaScript', 'DOM Manipulation'],
       features: ['Timer', 'Score tracking', 'Difficulty levels'],
@@ -242,7 +242,7 @@ function getProjectData(id) {
     'kpog': {
       title: 'KPOG',
       category: 'Web Platform',
-      image: './static/images/Kpog.png',
+      image: './static/images/Kpog.jpg',
       description: 'A scalable web platform built for a university project.',
       technologies: ['Modern Web Tech', 'Scalable Architecture'],
       features: ['Responsive design', 'User-friendly interface'],
