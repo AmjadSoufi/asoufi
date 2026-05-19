@@ -13,8 +13,8 @@
   --accent-glow: none;
   
   /* Typography */
-  --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-display: 'Inter', sans-serif;
+  --font-main: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-display: 'Space Grotesk', sans-serif;
   
   /* Spacing */
   --spacing-xs: 0.5rem;
