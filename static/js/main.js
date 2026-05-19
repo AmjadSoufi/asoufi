@@ -177,7 +177,7 @@ window.openModal = function(projectId) {
     
     const techContainer = document.getElementById('modalTechnologies');
     techContainer.innerHTML = projectData.technologies.map(tech => 
-      `<span class="project-card__tags span" style="margin-right:0.5rem; background:var(--surface-hover); padding:0.25rem 0.75rem; border-radius:20px; font-size:0.8rem;">${tech}</span>`
+      `<span class="modal__tag">${tech}</span>`
     ).join('');
     
     const featuresContainer = document.getElementById('modalFeatures');
