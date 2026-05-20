@@ -4,6 +4,8 @@
   "description": "A modern, responsive portfolio website showcasing selected university and personal projects by Amjad Soufi.",
   "main": "index.js",
   "scripts": {
+    "build": "esbuild static/redesign/_entry.jsx --bundle --format=iife --target=es2019 --loader:.jsx=jsx --jsx-factory=React.createElement --jsx-fragment=React.Fragment --define:process.env.NODE_ENV='\"production\"' --minify --sourcemap --outfile=static/redesign/dist/app.bundle.js",
+    "build:watch": "npm run build -- --watch",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
     "test:report": "playwright show-report"
@@ -23,6 +25,7 @@
   "devDependencies": {
     "@playwright/test": "^1.59.1",
     "@types/node": "^25.6.2",
+    "esbuild": "^0.28.0",
     "http-server": "^14.1.1"
   }
 }
