@@ -5,11 +5,12 @@
 // Heuristics (any one trips lite mode):
 //   - prefers-reduced-motion       → user has explicitly asked for less motion
 //   - hardwareConcurrency <= 4     → 2 cores on a Celeron, 4 on older laptops
-//                                     (also iOS Safari clamps to 2 for privacy,
-//                                     so this trips on iPhones too — which is
-//                                     fine: they lose the cursor/marquee/tilt
-//                                     they couldn't use anyway, and the intro
-//                                     is gated separately, not on this flag).
+//                                     NOTE: iOS Safari caps this at 2 for privacy,
+//                                     so iPhones always enter lite mode. That's fine
+//                                     for cursor/tilt (touch devices can't use them)
+//                                     but the marquee is explicitly excluded from
+//                                     lite-mode suppression in CSS because it is
+//                                     GPU-cheap — only prefers-reduced-motion stops it.
 //   - deviceMemory <= 4 (GB)       → ≤4 GB RAM
 //   - connection.saveData          → data-saver mode on
 //   - connection.effectiveType 2g/slow-2g → slow network on laptop tether

@@ -1524,12 +1524,10 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
 [data-perf="lite"] .cursor-dot,
 [data-perf="lite"] .cursor-outline { display: none; }
 
-/* 3. The marquee strip — infinite-loop transform animation, expensive to
-      composite on weak GPUs. Freeze it; the row of pills is still readable. */
-[data-perf="lite"] .marquee-track {
-  animation: none !important;
-  transform: none !important;
-}
+/* 3. The marquee strip — freeze only when the user has asked for reduced
+      motion (handled below); lite mode alone does NOT stop it because iOS
+      Safari caps hardwareConcurrency at 2 for privacy, which would trip
+      lite mode on every iPhone despite the marquee being GPU-cheap. */
 
 /* 4. The hero-side card's pulsing dot + nav availability dot. */
 [data-perf="lite"] .dot-pulse {
