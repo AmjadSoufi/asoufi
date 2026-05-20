@@ -219,10 +219,9 @@ function Hero({ variant, data, onJump, onOpenProject }) {
             <span className="dot-pulse" />
           </div>
           <ul className="card-list">
+            <li><span>Interning</span><b>BBANG — Milan</b></li>
+            <li><span>Shipping</span><b>231InCloud</b></li>
             <li><span>Studying</span><b>Full-stack Web</b></li>
-            <li><span>Reading</span><b>Designing Data-Intensive Apps</b></li>
-            <li><span>Shipping</span><b>Kanban v2</b></li>
-            <li><span>Listening</span><b>Bonobo — Fragments</b></li>
           </ul>
           <button className="card-foot" onClick={() => onOpenProject("kanban")}>
             Latest case study →
