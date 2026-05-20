@@ -1562,39 +1562,50 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
 .nav-hamburger {
   display: none; /* hidden on desktop — pill rail is visible there instead */
   position: relative;
-  width: 40px;
-  height: 36px;
-  border: 1px solid var(--line);
+  width: 44px;
+  height: 40px;
+  border: 1.5px solid color-mix(in oklab, var(--ink) 40%, transparent);
   border-radius: 999px;
   align-items: center;
   justify-content: center;
-  background: transparent;
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
   cursor: pointer;
-  z-index: 60;
+  z-index: 210;
   flex-shrink: 0;
+  transition: background .18s ease, border-color .18s ease;
+}
+.nav-hamburger:hover {
+  background: color-mix(in oklab, var(--ink) 12%, transparent);
+  border-color: color-mix(in oklab, var(--ink) 60%, transparent);
 }
 .nav-hamburger span {
   position: absolute;
-  left: 11px;
+  left: 50%;
+  transform: translateX(-50%);
   width: 18px;
-  height: 1.5px;
+  height: 2px;
   background: var(--ink);
-  border-radius: 1px;
+  border-radius: 2px;
   transition: transform .22s ease, opacity .18s ease, top .22s ease;
 }
-.nav-hamburger span:nth-child(1) { top: 12px; }
-.nav-hamburger span:nth-child(2) { top: 17px; }
-.nav-hamburger span:nth-child(3) { top: 22px; }
-.nav-hamburger.is-open span:nth-child(1) { top: 17px; transform: rotate(45deg); }
+.nav-hamburger span:nth-child(1) { top: 13px; }
+.nav-hamburger span:nth-child(2) { top: 19px; }
+.nav-hamburger span:nth-child(3) { top: 25px; }
+.nav-hamburger.is-open span:nth-child(1) { top: 19px; transform: translateX(-50%) rotate(45deg); }
 .nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.is-open span:nth-child(3) { top: 17px; transform: rotate(-45deg); }
+.nav-hamburger.is-open span:nth-child(3) { top: 19px; transform: translateX(-50%) rotate(-45deg); }
 
 /* ── Mobile drawer ──────────────────────────────────────────────────── */
+/* Sits in the root stacking context (rendered as a sibling of <header>),
+   covers the entire viewport below the sticky nav with a fully opaque
+   background. The background-color is repeated as a hex literal (not just
+   a var) so it can never inherit translucency from any parent rule. */
 .nav-drawer {
   position: fixed;
   inset: 60px 0 0 0; /* below the sticky nav */
-  z-index: 55;
-  background: var(--bg);
+  z-index: 200;
+  background: #0e1117;
+  background-color: var(--bg, #0e1117);
   border-top: 1px solid var(--line);
   padding: 24px var(--container-x) 32px;
   display: flex;
@@ -1604,6 +1615,7 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
   opacity: 0;
   pointer-events: none;
   transition: transform .25s cubic-bezier(.2,.7,.1,1), opacity .2s ease;
+  overflow-y: auto;
 }
 .nav-drawer.is-open {
   transform: translateY(0);

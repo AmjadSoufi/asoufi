@@ -26,51 +26,59 @@ function NavBar({ variant, active, onJump }) {
   const jumpAndClose = (id) => { setMenuOpen(false); onJump(id); };
 
   return (
-    <header className="nav" style={{
-      borderBottom: isBrut ? `2px solid ${variant.ink}` : `1px solid ${variant.line}`,
-      background: variant.bg + "cc",
-    }}>
-      <div className="nav-inner">
-        <button className="nav-mark" onClick={() => onJump("intro")} aria-label="Amjad Soufi — back to top">
-          <img className="mark-logo" src={logoSrc} alt="" aria-hidden="true" />
-          <span className="mark-dot" aria-hidden="true" />
-          <span className="mark-name" aria-hidden="true">Amjad Soufi</span>
-        </button>
+    <React.Fragment>
+      <header className="nav" style={{
+        borderBottom: isBrut ? `2px solid ${variant.ink}` : `1px solid ${variant.line}`,
+        background: variant.bg + "cc",
+      }}>
+        <div className="nav-inner">
+          <button className="nav-mark" onClick={() => onJump("intro")} aria-label="Amjad Soufi — back to top">
+            <img className="mark-logo" src={logoSrc} alt="" aria-hidden="true" />
+            <span className="mark-dot" aria-hidden="true" />
+            <span className="mark-name" aria-hidden="true">Amjad Soufi</span>
+          </button>
 
-        <nav className="nav-links">
-          {items.map((it, i) => (
-            <button
-              key={it.id}
-              className={"nav-link" + (active === it.id ? " is-active" : "")}
-              onClick={() => onJump(it.id)}
-            >
-              <span className="nav-num">0{i + 1}</span>
-              <span className="nav-lbl">{it.label}</span>
-            </button>
-          ))}
-        </nav>
+          <nav className="nav-links">
+            {items.map((it, i) => (
+              <button
+                key={it.id}
+                className={"nav-link" + (active === it.id ? " is-active" : "")}
+                onClick={() => onJump(it.id)}
+              >
+                <span className="nav-num">0{i + 1}</span>
+                <span className="nav-lbl">{it.label}</span>
+              </button>
+            ))}
+          </nav>
 
-        <button className="nav-cta" onClick={() => onJump("contact")}>
-          <span className="dot-pulse" />
-          {variant.grid === "swiss" ? "Available →" : "Available"}
-        </button>
+          <button className="nav-cta" onClick={() => onJump("contact")}>
+            <span className="dot-pulse" />
+            {variant.grid === "swiss" ? "Available →" : "Available"}
+          </button>
 
-        {/* Mobile-only hamburger. CSS hides this above 720px and hides the
-            pill rail below 720px, so the two never show at once. */}
-        <button
-          className={"nav-hamburger" + (menuOpen ? " is-open" : "")}
-          onClick={() => setMenuOpen((v) => !v)}
-          aria-label={menuOpen ? "Close menu" : "Open menu"}
-          aria-expanded={menuOpen}
-          aria-controls="mobile-nav"
-        >
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-          <span aria-hidden="true" />
-        </button>
-      </div>
+          {/* Mobile-only hamburger. CSS hides this above 720px and hides the
+              pill rail below 720px, so the two never show at once. */}
+          <button
+            className={"nav-hamburger" + (menuOpen ? " is-open" : "")}
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={menuOpen}
+            aria-controls="mobile-nav"
+          >
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+            <span aria-hidden="true" />
+          </button>
+        </div>
+      </header>
 
-      {/* Mobile drawer — full-screen list. Animates open via .is-open. */}
+      {/*
+        Mobile drawer — rendered OUTSIDE the <header> so it isn't trapped
+        inside the nav's stacking context (which combines a translucent
+        background + backdrop-filter on iOS, making child fixed elements
+        render see-through). As a sibling in the root stacking context the
+        drawer paints opaquely on top of everything.
+      */}
       <div
         id="mobile-nav"
         className={"nav-drawer" + (menuOpen ? " is-open" : "")}
@@ -98,7 +106,7 @@ function NavBar({ variant, active, onJump }) {
           <span>Available for new roles</span>
         </div>
       </div>
-    </header>
+    </React.Fragment>
   );
 }
 
