@@ -84,6 +84,11 @@
     </noscript>
     <script defer src="static/redesign/font-loader.js"></script>
 
+    <!-- Detect low-end devices and flip the page into lite mode BEFORE the
+         stylesheet evaluates — keeps backdrop-filter, marquee, cursor, etc.
+         from ever being applied on weak hardware. Synchronous on purpose. -->
+    <script src="static/redesign/perf-detect.js"></script>
+
     <!-- Redesign styles -->
     <link rel="stylesheet" href="static/css/redesign.css" />
   </head>

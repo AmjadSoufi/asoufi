@@ -5,8 +5,12 @@ function Intro({ variant, onDone, forcePlay = false }) {
   // Decide whether to show the intro:
   // - Skipped automatically if user has seen it this session (unless forcePlay).
   // - Forced via Tweak / replay button.
+  // - Also skipped on lite-mode devices (perf-detect.js set data-perf="lite")
+  //   so low-end laptops don't try to decode an H.264 stream on first paint.
   const seenKey = "asoufi.intro.seen";
-  const initialShow = forcePlay || !(typeof localStorage !== "undefined" && localStorage.getItem(seenKey));
+  const isLite = typeof document !== "undefined" &&
+    document.documentElement.getAttribute("data-perf") === "lite";
+  const initialShow = !isLite && (forcePlay || !(typeof localStorage !== "undefined" && localStorage.getItem(seenKey)));
   const [phase, setPhase] = React.useState(initialShow ? "playing" : "done");
   const videoRef = React.useRef(null);
   const timerRef = React.useRef(null);

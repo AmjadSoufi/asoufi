@@ -1477,3 +1477,54 @@ ul { list-style: none; margin: 0; padding: 0; }
 .ssr-skills li { padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink-dim); }
 
 footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family: var(--mono); font-size: 12px; text-align: center; }
+
+/* ── Lite mode for low-end devices ──────────────────────────────────── */
+/* Activated by perf-detect.js setting <html data-perf="lite">. Strips the
+   compositor-heavy effects that destroy scroll perf on integrated GPUs. */
+
+/* 1. The biggest one: backdrop-filter on the sticky nav re-rasterizes the
+      whole header every scroll frame. Replace it with an opaque background. */
+[data-perf="lite"] .nav {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  background: var(--bg) !important;
+}
+
+/* 2. The custom cursor — perf-detect.js + cursor.js both check this, but
+      hide the divs as a belt-and-suspenders fallback. */
+[data-perf="lite"] .cursor-dot,
+[data-perf="lite"] .cursor-outline { display: none; }
+
+/* 3. The marquee strip — infinite-loop transform animation, expensive to
+      composite on weak GPUs. Freeze it; the row of pills is still readable. */
+[data-perf="lite"] .marquee-track {
+  animation: none !important;
+  transform: none !important;
+}
+
+/* 4. The hero-side card's pulsing dot + nav availability dot. */
+[data-perf="lite"] .dot-pulse {
+  animation: none !important;
+  box-shadow: none !important;
+}
+
+/* 5. The scroll-bar trail animation (decorative line under "Scroll"). */
+[data-perf="lite"] .scroll-bar::after { animation: none !important; }
+
+/* 6. Reveal entrance transitions — Reveal.jsx sets inline transitions, but
+      these blanket rules instantly show content if anything slips through. */
+[data-perf="lite"] [style*="opacity: 0"],
+[data-perf="lite"] [style*="opacity:0"] {
+  opacity: 1 !important;
+}
+[data-perf="lite"] .clip-rev-inner { transform: none !important; }
+
+/* 7. Soften hover transforms so we're not promoting layers on each card. */
+[data-perf="lite"] .proj-btn:hover .proj-thumb { transform: none !important; }
+[data-perf="lite"] .proj-btn:hover .thumb-image { transform: none !important; }
+
+/* 8. Drop the body-wide cursor:none — we don't render the custom cursor. */
+[data-perf="lite"] body { cursor: auto !important; }
+
+/* 9. Smooth scroll uses extra GPU work on long pages — keep it instant. */
+[data-perf="lite"] { scroll-behavior: auto !important; }

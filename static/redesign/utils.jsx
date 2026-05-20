@@ -1,10 +1,16 @@
 // Shared utilities for the portfolio prototype.
 
+// True if perf-detect.js flagged this device as low-end. Reveals + CountUps
+// short-circuit to their final state so we don't burn CPU on animations.
+const __PERF_LITE = typeof document !== "undefined" &&
+  document.documentElement.getAttribute("data-perf") === "lite";
+
 // IntersectionObserver-based reveal-on-scroll.
 function useReveal(threshold = 0.15) {
   const ref = React.useRef(null);
-  const [shown, setShown] = React.useState(false);
+  const [shown, setShown] = React.useState(__PERF_LITE);
   React.useEffect(() => {
+    if (__PERF_LITE) return;
     if (!ref.current || shown) return;
     const io = new IntersectionObserver(
       (entries) => {
@@ -55,11 +61,13 @@ function ClipReveal({ delay = 0, children, className, style, stagger = 90 }) {
   );
 }
 
-// Count up a number when the element scrolls into view.
+// Count up a number when the element scrolls into view. In lite mode we
+// just render the final value so the rAF tick + observer never fire.
 function useCountUp(to, { duration = 1100, decimals = 0 } = {}) {
   const ref = React.useRef(null);
-  const [val, setVal] = React.useState(0);
+  const [val, setVal] = React.useState(__PERF_LITE ? to : 0);
   React.useEffect(() => {
+    if (__PERF_LITE) return;
     if (!ref.current) return;
     let raf, started = false, start = 0;
     const tick = (t) => {
@@ -138,12 +146,14 @@ function useScrollProgress() {
   return p;
 }
 
-// Mouse-tilt helper for project thumbnails.
+// Mouse-tilt helper for project thumbnails. No-op in lite mode so weak
+// GPUs aren't doing a rAF per pointer move on every card hover.
 function useTilt(strength = 8) {
   const ref = React.useRef(null);
   React.useEffect(() => {
     const el = ref.current;
     if (!el) return;
+    if (document.documentElement.getAttribute("data-perf") === "lite") return;
     let raf = 0;
     let tx = 0, ty = 0;
     const onMove = (e) => {

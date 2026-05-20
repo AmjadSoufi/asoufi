@@ -9,11 +9,13 @@
   // Skip on:
   //   - coarse pointers (touch — no cursor to track)
   //   - reduced-motion preference (constant easing animation is motion)
+  //   - lite-mode (low-end devices: perf-detect.js set data-perf="lite")
   //   - keyboard-only navigators (we surface a system cursor again the first
   //     time Tab is pressed; see keydownOnce below)
   const mqlCoarse = window.matchMedia && window.matchMedia("(pointer: coarse)");
   const mqlReduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
-  if ((mqlCoarse && mqlCoarse.matches) || (mqlReduce && mqlReduce.matches)) return;
+  const isLite    = document.documentElement.getAttribute("data-perf") === "lite";
+  if (isLite || (mqlCoarse && mqlCoarse.matches) || (mqlReduce && mqlReduce.matches)) return;
 
   const start = () => {
     if (document.querySelector("[data-cursor-dot]")) return;
