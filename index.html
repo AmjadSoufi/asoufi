@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-variant="editorial">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -10,26 +10,38 @@
     />
     <meta name="keywords" content="Amjad Soufi, Asoufi, Full Stack Developer, React, Node.js, Web Development, Portfolio" />
     <meta name="author" content="Amjad Soufi" />
+    <link rel="canonical" href="https://amjadsoufi.com/" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon-32.png" />
-    <link rel="icon" type="image/png" sizes="512x512" href="static/images/favicon.png" />
-    <link rel="apple-touch-icon" href="static/images/apple-touch-icon.png" />
-    <meta name="theme-color" content="#0a0a0f" />
+    <!-- Content Security Policy — locks script execution to self + the two
+         SRI-pinned unpkg files; blocks inline event handlers; restricts media
+         to first-party. Tighten later if Lighthouse or you add new origins. -->
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self' https://unpkg.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; media-src 'self'; connect-src 'self'; base-uri 'self'; form-action 'self'"
+    />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+
+    <!-- Favicon (redesign logo) -->
+    <link rel="icon" type="image/png" href="static/images/logo-as-white.png" media="(prefers-color-scheme: dark)" />
+    <link rel="icon" type="image/png" href="static/images/logo-as-dark.png" media="(prefers-color-scheme: light)" />
+    <link rel="icon" type="image/png" sizes="32x32" href="static/images/logo-as-white.png" />
+    <link rel="apple-touch-icon" href="static/images/logo-as-white.png" />
+    <meta name="theme-color" content="#0e1117" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://amjadsoufi.com/" />
     <meta property="og:title" content="Amjad Soufi (Asoufi) | Full Stack Developer" />
     <meta property="og:description" content="Amjad Soufi (Asoufi) - Full Stack Developer specializing in building exceptional digital experiences." />
-    <meta property="og:image" content="https://amjadsoufi.com/static/images/og-image.png" />
+    <meta property="og:image" content="https://amjadsoufi.com/static/images/portrait.jpg" />
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image" />
     <meta property="twitter:url" content="https://amjadsoufi.com/" />
     <meta property="twitter:title" content="Amjad Soufi (Asoufi) | Full Stack Developer" />
     <meta property="twitter:description" content="Amjad Soufi (Asoufi) - Full Stack Developer specializing in building exceptional digital experiences." />
-    <meta property="twitter:image" content="https://amjadsoufi.com/static/images/og-image.png" />
+    <meta property="twitter:image" content="https://amjadsoufi.com/static/images/portrait.jpg" />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
@@ -52,314 +64,163 @@
       "description": "Full Stack Developer specializing in building exceptional digital experiences."
     }
     </script>
-    
-    <!-- Fonts: load async to avoid render-blocking -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" />
-    <link rel="stylesheet" media="print" onload="this.media='all'" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap">
-    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap"></noscript>
-    
-    <!-- Styles -->
-    <link rel="stylesheet" href="static/css/main.min.css" />
+
+    <!-- Fonts: load asynchronously without blocking render. The <link> ships
+         as media="print" and is promoted to media="all" by font-loader.js
+         once it's done downloading. CSP-clean (no inline event handlers). -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      data-async-font
+      media="print"
+      href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:ital,wght@0,500;0,700;0,800;0,900;1,500;1,700;1,800;1,900&display=swap"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Archivo:ital,wght@0,500;0,700;0,800;0,900;1,500;1,700;1,800;1,900&display=swap"
+      />
+    </noscript>
+    <script defer src="static/redesign/font-loader.js"></script>
+
+    <!-- Redesign styles -->
+    <link rel="stylesheet" href="static/css/redesign.css" />
   </head>
   <body>
-    <div class="cursor-dot" data-cursor-dot></div>
-    <div class="cursor-outline" data-cursor-outline></div>
-
-    <header class="header">
-      <div class="header__container">
-        <a href="#" class="header__logo">AS<span class="accent">.</span></a>
-        
-        <nav class="header__nav">
-          <ul class="header__menu">
-            <li><a href="#home" class="header__link active">Home</a></li>
-            <li><a href="#about" class="header__link">About</a></li>
-            <li><a href="#skills" class="header__link">Skills</a></li>
-            <li><a href="#projects" class="header__link">Work</a></li>
-            <li><a href="#contact" class="header__link">Contact</a></li>
-          </ul>
+    <!-- Crawler / no-JS fallback. React replaces this subtree on mount, so
+         users with JS see the interactive app and crawlers (Bing, DuckDuckGo,
+         social-card scrapers, etc. that don't fully execute JSX bundles)
+         still index real content + links. The brief flash before hydration
+         is acceptable; it's a styled, semantic version of the page. -->
+    <div id="root">
+      <header class="ssr-nav" role="banner">
+        <a href="#intro" class="ssr-brand">Amjad Soufi</a>
+        <nav aria-label="Primary">
+          <a href="#intro">Intro</a>
+          <a href="#about">About</a>
+          <a href="#skills">Skills</a>
+          <a href="#work">Work</a>
+          <a href="#contact">Contact</a>
         </nav>
+      </header>
 
-        <button class="header__hamburger" aria-label="Menu">
-          <span></span>
-          <span></span>
-        </button>
-      </div>
-    </header>
-
-    <main>
-      <section id="home" class="hero">
-        <div class="hero__bg-elements"></div>
-        
-        <div class="hero__content container">
-          <span class="hero__subtitle fade-in-up">Amjad Soufi</span>
-          <h1 class="hero__title fade-in-up delay-1">
-            Full Stack<br />
-            Developer.
-          </h1>
-          <p class="hero__description fade-in-up delay-2">
+      <main>
+        <section id="intro" class="ssr-section">
+          <p class="ssr-eyebrow">Currently</p>
+          <h1>Full-stack developer building careful web products.</h1>
+          <p class="ssr-lead">
             Crafting digital experiences with precision and simplicity.
+            Full-Stack Developer building careful, fast, considered web
+            products — front to back. Based in Bruges, Belgium.
           </p>
-          <div class="hero__actions fade-in-up delay-3">
-            <a href="#projects" class="btn btn--primary">Selected Work</a>
-            <a href="#contact" class="btn btn--outline">Get in Touch</a>
-          </div>
-          
-          <div class="hero__socials fade-in-up delay-4">
-            <a href="https://github.com/AmjadSoufi" target="_blank" rel="noopener" aria-label="GitHub">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
-            </a>
-            <a href="https://be.linkedin.com/in/amjad-soufi-57794b316" target="_blank" rel="noopener" aria-label="LinkedIn">
-              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
-            </a>
-          </div>
-        </div>
-        
-        <div class="hero__scroll-down">
-          <span class="scroll-text">Scroll</span>
-          <span class="line"></span>
-        </div>
-      </section>
+          <p>
+            <a href="#work">Selected work</a> ·
+            <a href="#contact">Get in touch</a>
+          </p>
+          <ul class="ssr-socials" aria-label="Find me online">
+            <li><a href="https://github.com/AmjadSoufi" rel="me noopener">GitHub · @AmjadSoufi</a></li>
+            <li><a href="https://be.linkedin.com/in/amjad-soufi-57794b316" rel="me noopener">LinkedIn · amjad-soufi</a></li>
+            <li><a href="mailto:amjad.soufi@student.arteveldehs.be">Email · amjad.soufi@student.arteveldehs.be</a></li>
+          </ul>
+        </section>
 
-      <section id="about" class="about section">
-        <div class="container">
-          <h2 class="section__title fade-in-up">About Me</h2>
-          <div class="about__content">
-            <div class="about__text fade-in-up">
-              <p>
-                I am a junior programmer passionate about learning and growing in the tech world. I quickly pick up new challenges and complete tasks efficiently with strong attention to detail.
-              </p>
-              <p>
-                I enjoy taking initiative, exploring new technologies, and always strive to be a helpful and positive team member. I have experience with fullstack development, allowing me to work confidently on both front-end and back-end projects.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        <section id="about" class="ssr-section">
+          <h2>About</h2>
+          <p>
+            I am a junior programmer passionate about learning and growing
+            in the tech world. I quickly pick up new challenges and complete
+            tasks efficiently with strong attention to detail.
+          </p>
+          <p>
+            I enjoy taking initiative, exploring new technologies, and
+            always strive to be a helpful and positive team member.
+            Comfortable across the stack — React and TypeScript on the
+            front, Node and Strapi on the back.
+          </p>
+          <dl class="ssr-kv">
+            <dt>Name</dt><dd>Amjad Soufi</dd>
+            <dt>Based</dt><dd>Bruges, Belgium · CET</dd>
+            <dt>Roles</dt><dd>Junior · Full-stack · Frontend</dd>
+            <dt>Languages</dt><dd>English · Dutch · Arabic</dd>
+            <dt>Education</dt><dd>Arteveldehogeschool</dd>
+          </dl>
+        </section>
 
-      <section id="skills" class="skills section">
-        <div class="container">
-          <h2 class="section__title fade-in-up">My Skills</h2>
-          <div class="skills__grid">
-            <div class="skill-card">
-              <i class="devicon-html5-plain colored"></i>
-              <span>HTML5</span>
-            </div>
-            <div class="skill-card">
-              <i class="devicon-css3-plain colored"></i>
-              <span>CSS3</span>
-            </div>
-            <div class="skill-card">
-              <i class="devicon-javascript-plain colored"></i>
-              <span>JavaScript</span>
-            </div>
-            <div class="skill-card">
-              <i class="devicon-react-original colored"></i>
-              <span>React</span>
-            </div>
-            <div class="skill-card">
-              <i class="devicon-nodejs-plain colored"></i>
-              <span>Node.js</span>
-            </div>
-            <div class="skill-card">
-              <i class="devicon-typescript-plain colored"></i>
-              <span>TypeScript</span>
-            </div>
-            <div class="skill-card">
-              <i class="devicon-sass-original colored"></i>
-              <span>Sass</span>
-            </div>
-            <div class="skill-card">
-              <i class="devicon-git-plain colored"></i>
-              <span>Git</span>
-            </div>
-          </div>
-        </div>
-      </section>
+        <section id="skills" class="ssr-section">
+          <h2>Skills</h2>
+          <ul class="ssr-skills">
+            <li>React</li><li>TypeScript</li><li>JavaScript</li>
+            <li>Node.js</li><li>Strapi</li><li>Sass</li>
+            <li>HTML5</li><li>CSS3</li><li>Git</li>
+          </ul>
+        </section>
 
-      <section id="projects" class="projects section">
-        <div class="container">
-          <h2 class="section__title fade-in-up">Featured Projects</h2>
-          <div class="projects__grid">
-            <!-- Project 1 -->
-            <article class="project-card fade-in-up">
-              <div class="project-card__image">
-                <img src="./static/images/Kanban.jpg" alt="Kanban Project" loading="lazy" decoding="async" width="800" height="500">
-                <div class="project-card__overlay">
-                  <div class="project-card__links">
-                    <button class="btn btn--sm btn--white" onclick="openModal('kanban-project')">Details</button>
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__content">
-                <h3 class="project-card__title">Kanban App</h3>
-                <p class="project-card__desc">A modern Kanban-style project management app built with React and Strapi.</p>
-                <div class="project-card__tags">
-                  <span>React</span>
-                  <span>Strapi</span>
-                  <span>Sass</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Project 2 -->
-            <article class="project-card fade-in-up">
-              <div class="project-card__image">
-                <img src="./static/images/make-it-happen.jpg" alt="Make It Happen" loading="lazy" decoding="async" width="800" height="500">
-                <div class="project-card__overlay">
-                  <div class="project-card__links">
-                    <button class="btn btn--sm btn--white" onclick="openModal('make-it-happen')">Details</button>
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__content">
-                <h3 class="project-card__title">Make It Happen</h3>
-                <p class="project-card__desc">A practical and user-friendly to-do list application for daily task management.</p>
-                <div class="project-card__tags">
-                  <span>JS</span>
-                  <span>HTML</span>
-                  <span>CSS</span>
-                </div>
-              </div>
-            </article>
-
-            <!-- Project 3 -->
-            <article class="project-card fade-in-up">
-              <div class="project-card__image">
-                <img src="./static/images/best-of-2024.jpg" alt="Best of 2024" loading="lazy" decoding="async" width="800" height="500">
-                <div class="project-card__overlay">
-                  <div class="project-card__links">
-                    <button class="btn btn--sm btn--white" onclick="openModal('best-of-2024')">Details</button>
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__content">
-                <h3 class="project-card__title">Best of 2024</h3>
-                <p class="project-card__desc">A showcase of the best movies, albums, series, games, and music of 2024.</p>
-                <div class="project-card__tags">
-                  <span>Design</span>
-                  <span>HTML</span>
-                  <span>CSS</span>
-                </div>
-              </div>
-            </article>
-            
-             <!-- Project 4 -->
-            <article class="project-card fade-in-up">
-              <div class="project-card__image">
-                <img src="./static/images/Memory-game.jpg" alt="Memory Game" loading="lazy" decoding="async" width="800" height="500">
-                <div class="project-card__overlay">
-                  <div class="project-card__links">
-                    <button class="btn btn--sm btn--white" onclick="openModal('memory-game')">Details</button>
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__content">
-                <h3 class="project-card__title">Memory Game</h3>
-                <p class="project-card__desc">A game designed for new students interested in programming.</p>
-                <div class="project-card__tags">
-                  <span>JS</span>
-                  <span>Game Logic</span>
-                </div>
-              </div>
-            </article>
-
-             <!-- Project 5 -->
-            <article class="project-card fade-in-up">
-              <div class="project-card__image">
-                <img src="./static/images/Kpog.jpg" alt="KPOG" loading="lazy" decoding="async" width="800" height="500">
-                <div class="project-card__overlay">
-                  <div class="project-card__links">
-                    <button class="btn btn--sm btn--white" onclick="openModal('kpog')">Details</button>
-                  </div>
-                </div>
-              </div>
-              <div class="project-card__content">
-                <h3 class="project-card__title">KPOG</h3>
-                <p class="project-card__desc">A modern, scalable, and user-friendly web platform.</p>
-                <div class="project-card__tags">
-                  <span>Web App</span>
-                  <span>Scalable</span>
-                </div>
-              </div>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="contact section">
-        <div class="container">
-          <div class="contact__wrapper fade-in-up">
-            <h2 class="section__title">Get In Touch</h2>
-            <p class="contact__text">
-              I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+        <section id="work" class="ssr-section">
+          <h2>Selected work</h2>
+          <article>
+            <h3>Kanban App <small>· 2025</small></h3>
+            <p>A Kanban-style project management app: drag-and-drop boards, paginated backlog, search/filter, and a Strapi-powered API backing it.</p>
+            <p>
+              <a href="https://github.com/pgm-2425-programming-4/final-project-AmjadSoufi" rel="noopener">Code</a> ·
+              <a href="https://prismatic-llama-08c1d7.netlify.app/" rel="noopener">Live demo</a>
             </p>
-            <a href="mailto:amjad.soufi@student.arteveldehs.be" class="btn btn--primary btn--lg">Say Hello</a>
-          </div>
-        </div>
-      </section>
-    </main>
+          </article>
+          <article>
+            <h3>Make It Happen <small>· 2024</small></h3>
+            <p>A full-stack to-do app with user accounts, server-rendered EJS views, and a SQLite database (Knex + Objection) for persistence.</p>
+            <p><a href="https://github.com/pgmgent-pgm-3/make-it-happen-AmjadSoufi" rel="noopener">Code</a></p>
+          </article>
+          <article>
+            <h3>Best of 2024 <small>· 2024</small></h3>
+            <p>A year-in-review microsite covering the best films, albums, series, and games of 2024 — static, hand-built, hosted on GitHub Pages.</p>
+            <p>
+              <a href="https://github.com/pgm-2425-atwork-1/project-2-AmjadSoufi" rel="noopener">Code</a> ·
+              <a href="https://pgm-2425-atwork-1.github.io/project-2-AmjadSoufi/" rel="noopener">Live demo</a>
+            </p>
+          </article>
+          <article>
+            <h3>Memory Game <small>· 2023</small></h3>
+            <p>A memory card game written for first-year programming students — entertainment plus a step-by-step tutorial for building it yourself.</p>
+            <p><a href="https://github.com/pgmgent-atwork2/project-1-workshop-start-to-code-amjad-serdar" rel="noopener">Code</a></p>
+          </article>
+          <article>
+            <h3>KPOG <small>· 2025</small></h3>
+            <p>A multi-page CMS-driven site built on Craft CMS 5 with Twig templates, CKEditor content blocks, and a Freeform contact pipeline.</p>
+            <p><a href="https://github.com/pgmgent-atwork2/project-2-werkstuk-byteflow" rel="noopener">Code</a></p>
+          </article>
+        </section>
 
-    <footer class="footer">
-      <div class="container">
-        <p class="footer__copyright">&copy; 2025 Amjad Soufi. Built with passion.</p>
-      </div>
-    </footer>
+        <section id="contact" class="ssr-section">
+          <h2>Contact</h2>
+          <p>I'm looking for a first full-time role — junior front-end or full-stack, ideally with a small, opinionated team that ships often.</p>
+          <p><a href="mailto:amjad.soufi@student.arteveldehs.be">Say hello</a></p>
+        </section>
+      </main>
 
-    <!-- Modal -->
-    <div id="projectModal" class="modal">
-        <div class="modal__overlay" onclick="closeModal()"></div>
-        <div class="modal__content">
-          <button class="modal__close" onclick="closeModal()">&times;</button>
-          <div class="modal__header">
-            <img id="modalImage" src="" alt="" class="modal__image" />
-            <div class="modal__header-info">
-              <span id="modalCategory" class="modal__category"></span>
-              <h2 id="modalTitle" class="modal__title"></h2>
-            </div>
-          </div>
-          <div class="modal__body">
-            <div class="modal__description">
-              <h3>Project Description</h3>
-              <p id="modalDescription"></p>
-            </div>
-            <div class="modal__details">
-              <h3>Project Details</h3>
-              <div id="modalTechnologies" class="modal__technologies"></div>
-              <div id="modalFeatures" class="modal__features"></div>
-            </div>
-            <div class="modal__actions">
-              <a
-                id="modalGithubLink"
-                href=""
-                target="_blank"
-                rel="noopener"
-                class="modal__button modal__button--primary"
-              >
-                View Code on GitHub
-              </a>
-              <a
-                id="modalLiveDemoLink"
-                href=""
-                target="_blank"
-                rel="noopener"
-                class="modal__button modal__button--primary"
-                style="margin-left: 10px"
-              >
-                Visit Website
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
+      <footer><p>© 2026 Amjad Soufi · Portfolio</p></footer>
+    </div>
 
-    <!-- Devicon: load async (non-critical) -->
-    <link rel="preload" as="style" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" onload="this.rel='stylesheet'">
-    <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"></noscript>
-    <!-- GSAP + main: defer so they don't block render -->
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script defer src="static/js/main.js"></script>
+    <!-- React production builds (SRI-pinned for supply-chain safety) -->
+    <script
+      defer
+      crossorigin="anonymous"
+      integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"
+      src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
+    ></script>
+    <script
+      defer
+      crossorigin="anonymous"
+      integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"
+      src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
+    ></script>
+
+    <!-- Custom cursor (vanilla JS, no React dependency) -->
+    <script defer src="static/redesign/cursor.js"></script>
+
+    <!-- Pre-compiled portfolio bundle (esbuild; minified IIFE). All redesign
+         JSX + data + variants are merged into one file — Babel is no longer
+         loaded in the browser. Rebuild with `npm run build`. -->
+    <script defer src="static/redesign/dist/app.bundle.js"></script>
   </body>
 </html>
