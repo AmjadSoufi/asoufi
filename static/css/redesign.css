@@ -1210,8 +1210,21 @@ ul { list-style: none; margin: 0; padding: 0; }
   .contact-grid { grid-template-columns: 1fr; gap: 32px; }
   .work-grid { grid-template-columns: 1fr; }
   .modal-body { grid-template-columns: 1fr; gap: 24px; }
-  .nav-links { display: none; }
-  .nav-inner { grid-template-columns: 1fr auto; }
+  /* Compact, horizontally scrollable rail so jump-nav still works on
+     phones. Smaller chips, no number prefix, hides scrollbar. */
+  .nav-inner { grid-template-columns: auto 1fr auto; gap: 12px; }
+  .nav-links {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    padding: 3px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    max-width: 100%;
+  }
+  .nav-links::-webkit-scrollbar { display: none; }
+  .nav-link { padding: 6px 10px; font-size: 10.5px; flex-shrink: 0; }
+  .nav-link .nav-num { display: none; }
   .sec-head { grid-template-columns: 40px auto 1fr auto; gap: 16px; }
   .sec-title { font-size: 44px; }
   .hero-meta { grid-template-columns: 1fr; gap: 12px; }
@@ -1426,13 +1439,29 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 
 @media (max-width: 720px) {
-  .filter-bar--grouped { gap: 10px 14px; }
-  .filter-group { padding-left: 0; gap: 8px; flex-basis: 100%; }
+  /* Stack the whole bar vertically: All on top, then one row per category
+     with the label above its chip row. */
+  .filter-bar--grouped {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+  }
+  .filter-group {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding-left: 0;
+    gap: 8px;
+  }
   .filter-group::before { display: none; }
   .filter-group-label {
-    flex-basis: 100%;
-    padding-top: 4px;
+    padding-top: 0;
   }
+  .filter-group-chips {
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .filter-bar--grouped .chip-all { align-self: flex-start; }
 }
 
 /* ── SSR / crawler-fallback styles ──────────────────────────────────── */
