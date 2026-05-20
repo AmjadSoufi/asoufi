@@ -10,6 +10,21 @@ function NavBar({ variant, active, onJump }) {
   ];
   const isBrut = variant.grid === "swiss";
   const logoSrc = isBrut ? "static/images/logo-as-dark.png" : "static/images/logo-as-white.png";
+
+  // Mobile drawer: open state + scroll lock + close on Esc.
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => { if (e.key === "Escape") setMenuOpen(false); };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [menuOpen]);
+  const jumpAndClose = (id) => { setMenuOpen(false); onJump(id); };
+
   return (
     <header className="nav" style={{
       borderBottom: isBrut ? `2px solid ${variant.ink}` : `1px solid ${variant.line}`,
@@ -39,6 +54,49 @@ function NavBar({ variant, active, onJump }) {
           <span className="dot-pulse" />
           {variant.grid === "swiss" ? "Available →" : "Available"}
         </button>
+
+        {/* Mobile-only hamburger. CSS hides this above 720px and hides the
+            pill rail below 720px, so the two never show at once. */}
+        <button
+          className={"nav-hamburger" + (menuOpen ? " is-open" : "")}
+          onClick={() => setMenuOpen((v) => !v)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+        >
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+          <span aria-hidden="true" />
+        </button>
+      </div>
+
+      {/* Mobile drawer — full-screen list. Animates open via .is-open. */}
+      <div
+        id="mobile-nav"
+        className={"nav-drawer" + (menuOpen ? " is-open" : "")}
+        role="dialog"
+        aria-modal="true"
+        aria-label="Site navigation"
+        hidden={!menuOpen}
+      >
+        <ul className="nav-drawer-list">
+          {items.map((it, i) => (
+            <li key={it.id}>
+              <button
+                className={"nav-drawer-link" + (active === it.id ? " is-active" : "")}
+                onClick={() => jumpAndClose(it.id)}
+              >
+                <span className="nav-drawer-num">0{i + 1}</span>
+                <span className="nav-drawer-lbl">{it.label}</span>
+                <span className="nav-drawer-arrow" aria-hidden="true">→</span>
+              </button>
+            </li>
+          ))}
+        </ul>
+        <div className="nav-drawer-foot">
+          <span className="dot-pulse" aria-hidden="true" />
+          <span>Available for new roles</span>
+        </div>
       </div>
     </header>
   );

@@ -1557,3 +1557,129 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
 
 /* 9. Smooth scroll uses extra GPU work on long pages — keep it instant. */
 [data-perf="lite"] { scroll-behavior: auto !important; }
+
+/* ── Hamburger menu (mobile only) ───────────────────────────────────── */
+.nav-hamburger {
+  display: none; /* hidden on desktop — pill rail is visible there instead */
+  position: relative;
+  width: 40px;
+  height: 36px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  cursor: pointer;
+  z-index: 60;
+  flex-shrink: 0;
+}
+.nav-hamburger span {
+  position: absolute;
+  left: 11px;
+  width: 18px;
+  height: 1.5px;
+  background: var(--ink);
+  border-radius: 1px;
+  transition: transform .22s ease, opacity .18s ease, top .22s ease;
+}
+.nav-hamburger span:nth-child(1) { top: 12px; }
+.nav-hamburger span:nth-child(2) { top: 17px; }
+.nav-hamburger span:nth-child(3) { top: 22px; }
+.nav-hamburger.is-open span:nth-child(1) { top: 17px; transform: rotate(45deg); }
+.nav-hamburger.is-open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.is-open span:nth-child(3) { top: 17px; transform: rotate(-45deg); }
+
+/* ── Mobile drawer ──────────────────────────────────────────────────── */
+.nav-drawer {
+  position: fixed;
+  inset: 60px 0 0 0; /* below the sticky nav */
+  z-index: 55;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+  padding: 24px var(--container-x) 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transform: translateY(-12px);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform .25s cubic-bezier(.2,.7,.1,1), opacity .2s ease;
+}
+.nav-drawer.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.nav-drawer[hidden] { display: none; } /* fallback if .is-open never toggles */
+.nav-drawer-list { display: flex; flex-direction: column; gap: 2px; }
+.nav-drawer-link {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 4px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  color: var(--ink);
+}
+.nav-drawer-num {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--ink-faint);
+  letter-spacing: .06em;
+}
+.nav-drawer-lbl {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.nav-drawer-arrow {
+  font-size: 18px;
+  color: var(--ink-faint);
+  transition: transform .18s ease, color .18s ease;
+}
+.nav-drawer-link.is-active .nav-drawer-lbl { color: var(--accent); }
+.nav-drawer-link.is-active .nav-drawer-arrow { color: var(--accent); transform: translateX(4px); }
+.nav-drawer-link:hover .nav-drawer-arrow { transform: translateX(4px); color: var(--ink); }
+.nav-drawer-foot {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  align-self: flex-start;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+}
+
+/* ── Mobile breakpoint: swap pill rail for hamburger ────────────────── */
+@media (max-width: 720px) {
+  .nav-inner { grid-template-columns: auto 1fr auto auto; gap: 10px; }
+  .nav-links { display: none; } /* hide the horizontally-scrolling pills */
+  .nav-cta { padding: 7px 12px; font-size: 11px; }
+  .nav-hamburger { display: inline-flex; }
+}
+@media (min-width: 721px) {
+  .nav-drawer { display: none !important; } /* never let the drawer render on tablet+ */
+}
+
+/* ── Mobile footer ──────────────────────────────────────────────────── */
+@media (max-width: 720px) {
+  .foot {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 20px;
+    padding: 28px var(--container-x);
+    margin-top: 40px;
+  }
+  .foot-l, .foot-r { justify-content: center; flex-wrap: wrap; }
+  .foot-r { flex-direction: column; gap: 6px; }
+  .foot-top { font-size: 11px; padding: 9px 16px; }
+}
