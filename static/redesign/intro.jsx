@@ -5,12 +5,17 @@ function Intro({ variant, onDone, forcePlay = false }) {
   // Decide whether to show the intro:
   // - Skipped automatically if user has seen it this session (unless forcePlay).
   // - Forced via Tweak / replay button.
-  // - Also skipped on lite-mode devices (perf-detect.js set data-perf="lite")
-  //   so low-end laptops don't try to decode an H.264 stream on first paint.
+  // - Skipped when the user has asked for reduced motion or save-data —
+  //   NOT for the generic data-perf="lite" flag, because iOS Safari clamps
+  //   hardwareConcurrency to 2 for privacy, which would otherwise trip lite
+  //   mode on every iPhone and rob them of the intro unnecessarily.
   const seenKey = "asoufi.intro.seen";
-  const isLite = typeof document !== "undefined" &&
-    document.documentElement.getAttribute("data-perf") === "lite";
-  const initialShow = !isLite && (forcePlay || !(typeof localStorage !== "undefined" && localStorage.getItem(seenKey)));
+  const respectMotion = typeof window !== "undefined" &&
+    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const conn = typeof navigator !== "undefined" ? (navigator.connection || {}) : {};
+  const dataSaver = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || "");
+  const skipIntro = respectMotion || dataSaver;
+  const initialShow = !skipIntro && (forcePlay || !(typeof localStorage !== "undefined" && localStorage.getItem(seenKey)));
   const [phase, setPhase] = React.useState(initialShow ? "playing" : "done");
   const videoRef = React.useRef(null);
   const timerRef = React.useRef(null);
