@@ -19,6 +19,24 @@ function Intro({ variant, onDone, forcePlay = false }) {
   const [phase, setPhase] = React.useState(initialShow ? "playing" : "done");
   const videoRef = React.useRef(null);
   const timerRef = React.useRef(null);
+  const [videoSrc, setVideoSrc] = React.useState("static/media/intro.mp4");
+
+  // Choose the appropriate video source based on screen width
+  React.useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    const updateSrc = (e) => {
+      setVideoSrc(e.matches ? "static/media/Intro_Opacity_Tel.mp4" : "static/media/intro.mp4");
+    };
+    updateSrc(mq);
+
+    if (typeof mq.addEventListener === "function") {
+      mq.addEventListener("change", updateSrc);
+      return () => mq.removeEventListener("change", updateSrc);
+    } else {
+      mq.addListener(updateSrc);
+      return () => mq.removeListener(updateSrc);
+    }
+  }, []);
 
   // Lock scroll while intro is on-screen
   React.useEffect(() => {
@@ -86,7 +104,7 @@ function Intro({ variant, onDone, forcePlay = false }) {
         prevActiveRef.current.focus();
       }
     };
-  }, [phase, finish]);
+  }, [phase, finish, videoSrc]);
 
   // Re-enter when forcePlay flips true (used by the replay button).
   React.useEffect(() => {
@@ -117,7 +135,7 @@ function Intro({ variant, onDone, forcePlay = false }) {
       <video
         ref={videoRef}
         className="intro-video"
-        src="static/media/intro.mp4"
+        src={videoSrc}
         muted
         playsInline
         autoPlay
