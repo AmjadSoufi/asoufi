@@ -4,7 +4,30 @@
 
 function App() {
   const VARIANT_KEY = "editorial";
-  const variant = window.VARIANTS[VARIANT_KEY];
+  
+  const [theme, setTheme] = React.useState(() => {
+    return localStorage.getItem("theme") || "dark";
+  });
+
+  const baseVariant = window.VARIANTS[VARIANT_KEY];
+  
+  const variant = React.useMemo(() => {
+    if (theme === "light") {
+      return {
+        ...baseVariant,
+        bg: "#f7f4ee",
+        bgAlt: "#efebe2",
+        ink: "#1a202c",
+        inkDim: "rgba(26, 32, 44, 0.76)",
+        inkFaint: "rgba(26, 32, 44, 0.50)",
+        line: "rgba(26, 32, 44, 0.12)",
+        card: "#ffffff",
+        accent: "#2d7a4d",
+        accentInk: "#ffffff",
+      };
+    }
+    return baseVariant;
+  }, [baseVariant, theme]);
 
   const [active, setActive] = React.useState("intro");
   const [openId, setOpenId] = React.useState(null);
@@ -15,10 +38,17 @@ function App() {
 
   React.useEffect(() => {
     document.documentElement.setAttribute("data-variant", VARIANT_KEY);
+    document.documentElement.setAttribute("data-theme", theme);
     document.documentElement.style.setProperty("--accent", variant.accent);
     const meta = document.querySelector('meta[name="theme-color"]');
     if (meta) meta.setAttribute("content", variant.bg);
-  }, [variant.accent, variant.bg]);
+  }, [variant.accent, variant.bg, theme]);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === "dark" ? "light" : "dark";
+    setTheme(nextTheme);
+    localStorage.setItem("theme", nextTheme);
+  };
 
   React.useEffect(() => {
     const ids = ["intro", "about", "skills", "work", "contact"];
@@ -61,7 +91,13 @@ function App() {
         onDone={() => setIntroOver(true)}
       />
       <ScrollProgress />
-      <NavBar variant={variant} active={active} onJump={jump} />
+      <NavBar
+        variant={variant}
+        active={active}
+        onJump={jump}
+        theme={theme}
+        onToggleTheme={toggleTheme}
+      />
 
       <Hero variant={variant} data={data} onJump={jump} onOpenProject={open} />
 

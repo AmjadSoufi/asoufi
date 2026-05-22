@@ -38,11 +38,11 @@
     const onMove = (e) => {
       mx = e.clientX;
       my = e.clientY;
-      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
     };
     window.addEventListener("mousemove", onMove, { passive: true });
 
     const tick = () => {
+      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
       ox += (mx - ox) * 0.15;
       oy += (my - oy) * 0.15;
       outline.style.transform = `translate(${ox}px, ${oy}px) translate(-50%, -50%) scale(${scale})`;
