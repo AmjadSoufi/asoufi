@@ -160,9 +160,37 @@ ul { list-style: none; margin: 0; padding: 0; }
 }
 .nav-num { opacity: .5; }
 .nav-link.is-active .nav-num { opacity: .85; }
+.nav-actions {
+  justify-self: end;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.theme-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  background: transparent;
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease, transform .25s ease;
+}
+.theme-toggle-btn:hover {
+  background: var(--bg-alt);
+  transform: rotate(15deg) scale(1.05);
+}
+.theme-toggle-btn svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+}
 
 .nav-cta {
-  justify-self: end;
   display: inline-flex; align-items: center; gap: 8px;
   padding: 8px 14px;
   border: 1px solid var(--line);
@@ -973,6 +1001,40 @@ ul { list-style: none; margin: 0; padding: 0; }
 [data-variant="brutalist"] .stack-list li { border-radius: 0; font-weight: 600; }
 [data-variant="brutalist"] .proj-tags li { border-radius: 0; font-weight: 600; }
 [data-variant="brutalist"] .foot-top { border-radius: 0; font-weight: 600; }
+/* ============================================================
+   Theme: Light Mode (Linen & Emerald)
+   ============================================================ */
+[data-theme="light"] {
+  --bg: #f7f4ee;
+  --bg-alt: #efebe2;
+  --ink: #1a202c;
+  --ink-dim: rgba(26, 32, 44, 0.76);
+  --ink-faint: rgba(26, 32, 44, 0.50);
+  --line: rgba(26, 32, 44, 0.12);
+  --card: #ffffff;
+  --accent: #2d7a4d;
+  --accent-ink: #ffffff;
+}
+
+/* Light mode specific element adjustments */
+[data-theme="light"] .proj-thumb {
+  background: oklch(0.92 0.03 var(--hue, 30));
+}
+[data-theme="light"] .modal-hero {
+  background: oklch(0.92 0.03 var(--hue, 30));
+}
+[data-theme="light"] .thumb-grid {
+  background-image:
+    linear-gradient(to right, rgba(26, 32, 44, 0.08) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(26, 32, 44, 0.08) 1px, transparent 1px);
+}
+[data-theme="light"] .nav {
+  backdrop-filter: blur(20px) saturate(140%) contrast(90%);
+  -webkit-backdrop-filter: blur(20px) saturate(140%) contrast(90%);
+}
+[data-theme="light"] .portrait-img {
+  filter: contrast(96%) brightness(102%) saturate(96%);
+}
 
 /* ============================================================
    Animation primitives
@@ -1675,7 +1737,7 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
 
 /* ── Mobile breakpoint: swap pill rail for hamburger ────────────────── */
 @media (max-width: 720px) {
-  .nav-inner { grid-template-columns: auto 1fr auto auto; gap: 10px; }
+  .nav-inner { grid-template-columns: auto 1fr; gap: 10px; }
   .nav-links { display: none; } /* hide the horizontally-scrolling pills */
   .nav-cta { padding: 7px 12px; font-size: 11px; }
   .nav-hamburger { display: inline-flex; }
