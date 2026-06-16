@@ -21,10 +21,16 @@
 
   --container-w: 1280px;
   --container-x: 64px;
+
+  /* Color palette */
+  --clr-green:  #4ea872;
+  --clr-blue:   #5b8df5;
+  --clr-orange: #f0844c;
+  --clr-purple: #c77dda;
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; padding: 0; }
+html, body { margin: 0; padding: 0; overflow-x: hidden; }
 body {
   background: var(--bg);
   color: var(--ink);
@@ -106,10 +112,9 @@ ul { list-style: none; margin: 0; padding: 0; }
   max-width: var(--container-w);
   margin: 0 auto;
   padding: 14px var(--container-x);
-  display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
 }
 .nav-mark {
   display: inline-flex; align-items: center; gap: 10px;
@@ -142,6 +147,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   border: 1px solid var(--line);
   border-radius: 999px;
   background: color-mix(in oklab, var(--bg) 70%, transparent);
+  margin: 0 auto;
 }
 .nav-link {
   display: inline-flex; align-items: center; gap: 6px;
@@ -161,10 +167,10 @@ ul { list-style: none; margin: 0; padding: 0; }
 .nav-num { opacity: .5; }
 .nav-link.is-active .nav-num { opacity: .85; }
 .nav-actions {
-  justify-self: end;
   display: flex;
   align-items: center;
   gap: 12px;
+  margin-left: auto;
 }
 
 .theme-toggle-btn {
@@ -284,7 +290,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   color: var(--ink-dim);
 }
 
-.hero-cta { display: flex; gap: 12px; margin-top: 40px; flex-wrap: wrap; }
+.hero-cta { display: flex; gap: 12px; margin-top: 40px; flex-wrap: nowrap; align-items: center; }
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
   padding: 14px 22px;
@@ -805,41 +811,100 @@ ul { list-style: none; margin: 0; padding: 0; }
   text-transform: var(--caps);
 }
 
-.contact-actions { display: flex; flex-direction: column; gap: 14px; }
+.contact-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 12px 0;
+}
+
+/* Email card — spans all 3 cols, compact single row */
 .email-card {
-  display: flex; flex-direction: column; gap: 8px;
-  padding: 18px 20px;
+  grid-column: 1 / -1;
+  grid-row: 1;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  padding: 13px 16px;
   border: 1px solid var(--line); border-radius: var(--radius);
   background: var(--card);
 }
 .email-label {
-  font-family: var(--mono); font-size: 11px;
+  font-family: var(--mono); font-size: 10px;
   color: var(--ink-faint);
   letter-spacing: .06em; text-transform: var(--caps);
+  white-space: nowrap;
 }
 .email-val {
-  display: flex; align-items: baseline; justify-content: space-between; gap: 14px;
+  display: flex; align-items: center; gap: 10px;
   padding: 0; text-align: left;
-  font-size: 18px; color: var(--ink);
+  font-size: 13px; color: var(--ink); font-family: var(--mono);
+  letter-spacing: .01em;
+  flex: 1; min-width: 0;
 }
+.email-val span:first-child { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .email-val:hover { color: var(--accent); }
 .email-state {
-  font-family: var(--mono); font-size: 11px;
+  font-family: var(--mono); font-size: 10px;
   color: var(--ink-faint);
   letter-spacing: .04em; text-transform: var(--caps);
   transition: color .2s ease;
+  white-space: nowrap; flex-shrink: 0;
+  width: 42px; text-align: right;
 }
 .email-state.is-on { color: var(--accent); }
 
+/* Socials grid — spans first 2 of 3 cols on row 2 */
 .socials-grid {
+  grid-column: 1 / 3;
+  grid-row: 2;
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0;
   border: 1px solid var(--line);
-  border-radius: var(--radius);
+  border-right: none;
+  border-radius: var(--radius) 0 0 var(--radius);
   overflow: hidden;
 }
 .socials-grid .soc { border-radius: 0; }
+.socials-grid .soc-lg { padding: 16px; }
+.socials-grid .soc-lg .soc-v { font-size: 14px; }
+
+/* Say hello — 3rd col on row 2, styled like a soc card */
+.contact-actions .btn-primary {
+  grid-column: 3;
+  grid-row: 2;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: baseline;
+  gap: 6px 8px;
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 0 var(--radius) var(--radius) 0;
+  background: transparent;
+  color: var(--ink);
+  font-size: 14px;
+  font-family: var(--body);
+  font-weight: 500;
+  letter-spacing: 0;
+  transition: background .2s ease;
+}
+.contact-actions .btn-primary::before {
+  content: "Email";
+  grid-column: 1; grid-row: 1;
+  font-family: var(--mono); font-size: 10px;
+  color: var(--ink-faint);
+  letter-spacing: .06em; text-transform: uppercase;
+}
+.contact-actions .btn-primary .btn-arrow {
+  grid-column: 2; grid-row: 1;
+  font-size: 12px; color: var(--ink-dim);
+  transition: transform .2s ease, color .2s ease;
+}
+.contact-actions .btn-primary span:first-child {
+  grid-column: 1 / -1; grid-row: 2;
+  font-size: 14px; font-weight: 500;
+}
+.contact-actions .btn-primary:hover { background: var(--bg-alt); }
+.contact-actions .btn-primary:hover .btn-arrow { transform: translate(2px,-2px); color: var(--accent); }
 
 /* ----------------------------- Footer ----------------------------- */
 .foot {
@@ -1062,7 +1127,8 @@ ul { list-style: none; margin: 0; padding: 0; }
   display: block;
   overflow: hidden;
   line-height: inherit;
-  padding-bottom: 0.02em;
+  padding-bottom: 0.22em;
+  margin-bottom: -0.2em;
 }
 .clip-rev-inner {
   display: block;
@@ -1148,7 +1214,8 @@ ul { list-style: none; margin: 0; padding: 0; }
 .sec-head.is-in .sec-num { color: var(--ink); }
 
 /* Hero title: per-line subtle scale-in once each line is uncovered */
-.hero-title .clip-rev-line { padding-bottom: 0.05em; }
+/* Extra padding so descenders (g, j, p, y) aren't clipped by overflow:hidden */
+.hero-title .clip-rev-line { padding-bottom: 0.18em; margin-bottom: -0.13em; }
 
 /* Magnetic CTA pulse */
 .btn-primary::after {
@@ -1279,7 +1346,7 @@ ul { list-style: none; margin: 0; padding: 0; }
   .modal-body { grid-template-columns: 1fr; gap: 24px; }
   /* Compact, horizontally scrollable rail so jump-nav still works on
      phones. Smaller chips, no number prefix, hides scrollbar. */
-  .nav-inner { grid-template-columns: auto 1fr auto; gap: 12px; }
+  .nav-inner { gap: 12px; }
   .nav-links {
     overflow-x: auto;
     overflow-y: hidden;
@@ -1288,6 +1355,7 @@ ul { list-style: none; margin: 0; padding: 0; }
     scrollbar-width: none;
     -ms-overflow-style: none;
     max-width: 100%;
+    flex-shrink: 1;
   }
   .nav-links::-webkit-scrollbar { display: none; }
   .nav-link { padding: 6px 10px; font-size: 10.5px; flex-shrink: 0; }
@@ -1396,6 +1464,31 @@ ul { list-style: none; margin: 0; padding: 0; }
   .hero-socials .soc { border-right: 0; }
   .soc-v { font-size: 13px; }
   .sec-title { font-size: 32px; }
+
+  /* Contact actions: stack to single column on small screens */
+  .contact-actions {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+  .contact-actions .email-card {
+    grid-column: 1; grid-row: 1;
+  }
+  .socials-grid {
+    grid-column: 1; grid-row: 2;
+    border-right: 1px solid var(--line);
+    border-radius: var(--radius);
+    grid-template-columns: 1fr 1fr;
+  }
+  .contact-actions .btn-primary {
+    grid-column: 1; grid-row: 3;
+    border-radius: var(--radius);
+    border: 1px solid var(--line);
+    width: 100%;
+  }
+
+  /* Email card: shrink font so address fits on one line */
+  .email-val { font-size: 11px; }
+  .email-label { font-size: 9px; }
 }
 /* Cap the hero on very tall displays so it doesn't get airy past ~860px. */
 @media (min-height: 1000px) and (min-width: 1100px) {
@@ -1737,8 +1830,8 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
 
 /* ── Mobile breakpoint: swap pill rail for hamburger ────────────────── */
 @media (max-width: 720px) {
-  .nav-inner { grid-template-columns: auto 1fr; gap: 10px; }
-  .nav-links { display: none; } /* hide the horizontally-scrolling pills */
+  .nav-inner { gap: 10px; }
+  .nav-links { display: none; margin: 0; } /* hide the horizontally-scrolling pills */
   .nav-cta { padding: 7px 12px; font-size: 11px; }
   .nav-hamburger { display: inline-flex; }
 }
@@ -1760,3 +1853,220 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
   .foot-r { flex-direction: column; gap: 6px; }
   .foot-top { font-size: 11px; padding: 9px 16px; }
 }
+
+/* ============================================================
+   Color theme — multi-accent palette
+   ============================================================ */
+
+/* ── Hero ambient glow ── */
+[data-variant="editorial"] .hero::before {
+  content: "";
+  position: absolute;
+  top: -120px; left: -200px;
+  width: 700px; height: 700px;
+  background: radial-gradient(ellipse at center,
+    color-mix(in oklab, var(--clr-green) 18%, transparent) 0%,
+    color-mix(in oklab, var(--clr-blue) 8%, transparent) 45%,
+    transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(40px);
+}
+[data-variant="editorial"] .hero > * { position: relative; z-index: 1; }
+
+/* Hero title gradient on the em (accent) word */
+[data-variant="editorial"] .hero-title em {
+  background: linear-gradient(110deg, var(--clr-green) 0%, var(--clr-blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Caret keeps its own color */
+[data-variant="editorial"] .caret {
+  background: var(--clr-green);
+  -webkit-background-clip: unset;
+  background-clip: unset;
+  -webkit-text-fill-color: unset;
+}
+
+/* Scroll progress bar: green → blue gradient */
+[data-variant="editorial"] .scroll-progress-fill {
+  background: linear-gradient(to right, var(--clr-green), var(--clr-blue));
+}
+
+/* ── About section — blue accent ── */
+.sec-about .sec-num { color: var(--clr-blue) !important; }
+[data-variant="editorial"] .sec-about .sec-rule::after { background: var(--clr-blue); }
+[data-variant="editorial"] .sec-about .bio-stats b { color: var(--clr-blue); }
+[data-variant="editorial"] .sec-about .bio-stats li:nth-child(2) b { color: var(--clr-green); }
+[data-variant="editorial"] .sec-about .bio-stats li:nth-child(3) b { color: var(--clr-orange); }
+
+/* ── Skills section — orange accent ── */
+.sec-skills .sec-num { color: var(--clr-orange) !important; }
+[data-variant="editorial"] .sec-skills .sec-rule::after { background: var(--clr-orange); }
+
+/* Skill bar fills: group 1 = blue, group 2 = orange, group 3+ = purple */
+[data-variant="editorial"] .skills-group:nth-child(1) .skill-fill { background: var(--clr-blue); }
+[data-variant="editorial"] .skills-group:nth-child(2) .skill-fill { background: var(--clr-orange); }
+[data-variant="editorial"] .skills-group:nth-child(3) .skill-fill { background: var(--clr-purple); }
+[data-variant="editorial"] .skills-group:nth-child(4) .skill-fill { background: var(--clr-green); }
+[data-variant="editorial"] .skill-row:hover .skill-fill { filter: brightness(1.2); }
+
+/* Group tags colored per group */
+[data-variant="editorial"] .skills-group:nth-child(1) .grp-tag { color: var(--clr-blue); }
+[data-variant="editorial"] .skills-group:nth-child(2) .grp-tag { color: var(--clr-orange); }
+[data-variant="editorial"] .skills-group:nth-child(3) .grp-tag { color: var(--clr-purple); }
+[data-variant="editorial"] .skills-group:nth-child(4) .grp-tag { color: var(--clr-green); }
+
+/* ── Experience section — purple accent ── */
+.sec-exp .sec-num { color: var(--clr-purple) !important; }
+[data-variant="editorial"] .sec-exp .sec-rule::after { background: var(--clr-purple); }
+[data-variant="editorial"] .exp-what { color: var(--ink); }
+[data-variant="editorial"] .exp-row:hover .exp-what { color: var(--clr-purple); transition: color .2s ease; }
+
+/* ── Work / Projects section — orange section num ── */
+.sec-work .sec-num { color: var(--clr-orange) !important; }
+[data-variant="editorial"] .sec-work .sec-rule::after { background: var(--clr-orange); }
+
+/* Project tags — colored borders cycling through palette */
+[data-variant="editorial"] .proj:nth-child(4n+1) .proj-tags li { border-color: color-mix(in oklab, var(--clr-blue) 55%, transparent); color: var(--clr-blue); }
+[data-variant="editorial"] .proj:nth-child(4n+2) .proj-tags li { border-color: color-mix(in oklab, var(--clr-orange) 55%, transparent); color: var(--clr-orange); }
+[data-variant="editorial"] .proj:nth-child(4n+3) .proj-tags li { border-color: color-mix(in oklab, var(--clr-purple) 55%, transparent); color: var(--clr-purple); }
+[data-variant="editorial"] .proj:nth-child(4n+4) .proj-tags li { border-color: color-mix(in oklab, var(--clr-green) 55%, transparent); color: var(--clr-green); }
+
+/* Project "view" chip uses matching accent */
+[data-variant="editorial"] .chip.is-on { background: var(--clr-blue); border-color: var(--clr-blue); color: #0e1117; }
+
+/* ── Contact section — green accent (keep on-brand) ── */
+.sec-contact .sec-num { color: var(--clr-green) !important; }
+[data-variant="editorial"] .sec-contact .sec-rule::after { background: var(--clr-green); }
+[data-variant="editorial"] .contact-title em {
+  color: var(--clr-green);
+}
+
+/* ── Marquee glyphs — cycle colors ── */
+[data-variant="editorial"] .marquee-glyph:nth-child(4n+1) { background: var(--clr-green); }
+[data-variant="editorial"] .marquee-glyph:nth-child(4n+2) { background: var(--clr-blue); }
+[data-variant="editorial"] .marquee-glyph:nth-child(4n+3) { background: var(--clr-orange); }
+[data-variant="editorial"] .marquee-glyph:nth-child(4n+4) { background: var(--clr-purple); }
+
+/* ── Nav active link — accent pill ── */
+[data-variant="editorial"] .nav-link.is-active {
+  background: var(--clr-green);
+  color: #0e1117;
+}
+
+/* ── Primary button — green fill ── */
+[data-variant="editorial"] .btn-primary { background: var(--clr-green); color: #0e1117; }
+[data-variant="editorial"] .btn-primary:hover { background: var(--clr-blue); color: #0e1117; }
+
+/* ── Social link arrows — color on hover ── */
+[data-variant="editorial"] .soc:nth-child(1):hover .soc-arrow { color: var(--clr-blue); }
+[data-variant="editorial"] .soc:nth-child(2):hover .soc-arrow { color: var(--clr-orange); }
+[data-variant="editorial"] .soc:nth-child(3):hover .soc-arrow { color: var(--clr-purple); }
+
+/* ── Email hover color ── */
+[data-variant="editorial"] .email-val:hover { color: var(--clr-blue); }
+[data-variant="editorial"] .email-state.is-on { color: var(--clr-green); }
+
+/* Light mode adjustments for new color palette */
+[data-theme="light"][data-variant="editorial"] .hero::before {
+  background: radial-gradient(ellipse at center,
+    color-mix(in oklab, var(--clr-green) 12%, transparent) 0%,
+    color-mix(in oklab, var(--clr-blue) 6%, transparent) 45%,
+    transparent 70%);
+}
+[data-theme="light"][data-variant="editorial"] .hero-title em {
+  background: linear-gradient(110deg, var(--clr-green) 0%, var(--clr-blue) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+[data-theme="light"] .sec-about .bio-stats b { color: var(--clr-blue); }
+[data-theme="light"] .sec-about .bio-stats li:nth-child(2) b { color: #2d7a4d; }
+[data-theme="light"] .sec-about .bio-stats li:nth-child(3) b { color: #c06030; }
+/* ===== end color theme ===== */
+
+/* ============================================================
+   Theme-switch: circular ripple reveal via View Transitions API
+   ============================================================ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* The incoming theme slides in as an expanding circle from the toggle button */
+::view-transition-new(root) {
+  clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%));
+  animation: theme-ripple 500ms cubic-bezier(.4, 0, .2, 1) forwards;
+}
+
+/* The outgoing snapshot sits underneath, no animation needed */
+::view-transition-old(root) {
+  z-index: 0;
+}
+::view-transition-new(root) {
+  z-index: 1;
+}
+
+@keyframes theme-ripple {
+  from { clip-path: circle(0px at var(--ripple-x, 50%) var(--ripple-y, 50%)); }
+  to   { clip-path: circle(var(--ripple-r, 100vmax) at var(--ripple-x, 50%) var(--ripple-y, 50%)); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-new(root) { animation: none; clip-path: none; }
+}
+/* ===== end theme-switch animation ===== */
+
+/* ===== film grain overlay (dark mode only) ===== */
+[data-theme="dark"] body::after {
+  content: "";
+  position: fixed;
+  inset: -100%;
+  width: 300%;
+  height: 300%;
+  z-index: 9000;
+  pointer-events: none;
+  opacity: 0.038;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  animation: grain 8s steps(10) infinite;
+  will-change: transform;
+}
+@keyframes grain {
+  0%   { transform: translate(0,    0);    }
+  10%  { transform: translate(-5%,  -5%);  }
+  20%  { transform: translate(-10%, 5%);   }
+  30%  { transform: translate(5%,  -10%);  }
+  40%  { transform: translate(-5%,  15%);  }
+  50%  { transform: translate(-10%, 5%);   }
+  60%  { transform: translate(15%,  0);    }
+  70%  { transform: translate(0,    10%);  }
+  80%  { transform: translate(-15%, 0);    }
+  90%  { transform: translate(10%,  5%);   }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="dark"] body::after { animation: none; }
+}
+/* ===== end film grain ===== */
+
+/* ===== cursor spotlight ===== */
+.cursor-spotlight {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 2;
+  background: radial-gradient(
+    circle 520px at var(--cx, -9999px) var(--cy, -9999px),
+    rgba(255, 255, 255, 0.055) 0%,
+    transparent 70%
+  );
+  transition: opacity 0.5s ease;
+  opacity: 0;
+}
+[data-theme="dark"] .cursor-spotlight { opacity: 1; }
+/* ===== end cursor spotlight ===== */

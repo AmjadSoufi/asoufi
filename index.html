@@ -91,7 +91,7 @@
     <script src="static/redesign/perf-detect.js"></script>
 
     <!-- Redesign styles -->
-    <link rel="stylesheet" href="static/css/redesign.css" />
+    <link rel="stylesheet" href="static/css/redesign.min.css" />
   </head>
   <body>
     <!-- Crawler / no-JS fallback. React replaces this subtree on mount, so
@@ -223,6 +223,12 @@
 
     <!-- Custom cursor (vanilla JS, no React dependency) -->
     <script defer src="static/redesign/cursor.js"></script>
+
+    <!-- Cursor spotlight -->
+    <script defer src="static/redesign/spotlight.js"></script>
+
+    <!-- Magnetic button effect -->
+    <script defer src="static/redesign/magnetic.js"></script>
 
     <!-- Pre-compiled portfolio bundle (esbuild; minified IIFE). All redesign
          JSX + data + variants are merged into one file — Babel is no longer
