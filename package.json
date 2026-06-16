@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "http-server . -p 5500 -c-1 -o",
-    "build": "esbuild static/redesign/_entry.jsx --bundle --format=iife --target=es2019 --loader:.jsx=jsx --jsx-factory=React.createElement --jsx-fragment=React.Fragment --define:process.env.NODE_ENV='\"production\"' --minify --sourcemap --outfile=static/redesign/dist/app.bundle.js",
+    "build": "esbuild static/redesign/_entry.jsx --bundle --format=iife --target=es2019 --loader:.jsx=jsx --jsx-factory=React.createElement --jsx-fragment=React.Fragment --define:process.env.NODE_ENV='\"production\"' --minify --sourcemap --outfile=static/redesign/dist/app.bundle.js && esbuild static/css/redesign.css --minify --outfile=static/css/redesign.min.css",
     "build:watch": "npm run build -- --watch",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
