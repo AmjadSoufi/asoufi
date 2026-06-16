@@ -54,7 +54,7 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
           <div className="nav-actions">
             <button
               className="theme-toggle-btn"
-              onClick={onToggleTheme}
+              onClick={(e) => onToggleTheme(e)}
               aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
               title={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
             >

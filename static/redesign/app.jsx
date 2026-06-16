@@ -44,10 +44,33 @@ function App() {
     if (meta) meta.setAttribute("content", variant.bg);
   }, [variant.accent, variant.bg, theme]);
 
-  const toggleTheme = () => {
+  const toggleTheme = (e) => {
     const nextTheme = theme === "dark" ? "light" : "dark";
-    setTheme(nextTheme);
-    localStorage.setItem("theme", nextTheme);
+    const btn = e?.currentTarget;
+
+    if (!document.startViewTransition || !btn) {
+      setTheme(nextTheme);
+      localStorage.setItem("theme", nextTheme);
+      return;
+    }
+
+    const rect = btn.getBoundingClientRect();
+    const cx = Math.round(rect.left + rect.width / 2);
+    const cy = Math.round(rect.top + rect.height / 2);
+    const maxR = Math.hypot(
+      Math.max(cx, window.innerWidth - cx),
+      Math.max(cy, window.innerHeight - cy)
+    );
+
+    document.documentElement.style.setProperty("--ripple-x", cx + "px");
+    document.documentElement.style.setProperty("--ripple-y", cy + "px");
+    document.documentElement.style.setProperty("--ripple-r", maxR + "px");
+
+    const transition = document.startViewTransition(() => {
+      setTheme(nextTheme);
+      localStorage.setItem("theme", nextTheme);
+    });
+    transition.ready.catch(() => {});
   };
 
   React.useEffect(() => {
