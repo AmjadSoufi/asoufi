@@ -1,6 +1,6 @@
 /* ============================================================
-   Portfolio prototype — three variants share one structure.
-   Variant-specific CSS lives in data-variant="..." selectors.
+   Portfolio — editorial design with dark and light themes.
+   Editorial accents use data-variant="editorial" selectors.
    ============================================================ */
 
 :root {
@@ -126,7 +126,6 @@ ul { list-style: none; margin: 0; padding: 0; }
   object-fit: contain;
   flex-shrink: 0;
 }
-[data-variant="brutalist"] .mark-logo { filter: none; }
 .mark-glyph {
   font-family: var(--display);
   font-size: 18px; font-weight: 700; line-height: 1;
@@ -935,138 +934,6 @@ ul { list-style: none; margin: 0; padding: 0; }
 .foot-r { display: flex; gap: 16px; align-items: center; }
 
 /* ============================================================
-   Variant: Terminal
-   ============================================================ */
-[data-variant="terminal"] {
-  --bg: #0c0f0e;
-  --bg-alt: #11161a;
-  --ink: #e6f4ec;
-  --ink-dim: rgba(230,244,236,.78);
-  --ink-faint: rgba(230,244,236,.56);
-  --line: rgba(230,244,236,.14);
-  --card: #11161a;
-  --accent: #5bf2a4;
-  --accent-ink: #0c0f0e;
-  --display: 'JetBrains Mono', ui-monospace, monospace;
-  --body: 'JetBrains Mono', ui-monospace, monospace;
-  --mono: 'JetBrains Mono', ui-monospace, monospace;
-  --radius: 2px;
-  --caps: lowercase;
-}
-[data-variant="terminal"] body { font-feature-settings: "ss01" 1, "ss02" 1; }
-[data-variant="terminal"] .hero-title { font-size: clamp(40px, 6.5vw, 96px); letter-spacing: -0.02em; line-height: 1; }
-[data-variant="terminal"] .hero-title em { font-style: normal; color: var(--accent); }
-[data-variant="terminal"] .sec-title { font-size: 44px; letter-spacing: -0.02em; }
-[data-variant="terminal"] .sec-title-sm { font-size: 28px; }
-[data-variant="terminal"] .modal-title { font-size: 32px; letter-spacing: -0.02em; }
-[data-variant="terminal"] .contact-title { font-size: 44px; letter-spacing: -0.02em; }
-[data-variant="terminal"] .proj-title { font-size: 22px; letter-spacing: -0.01em; }
-[data-variant="terminal"] .exp-what { font-family: var(--mono); font-size: 17px; }
-[data-variant="terminal"] .nav-link.is-active { background: var(--accent); color: var(--accent-ink); }
-[data-variant="terminal"] .btn-primary { background: var(--accent); color: var(--accent-ink); }
-[data-variant="terminal"] .btn-primary:hover { background: var(--ink); color: var(--bg); }
-[data-variant="terminal"] .btn { border-radius: 2px; }
-[data-variant="terminal"] .chip { border-radius: 2px; }
-[data-variant="terminal"] .chip.is-on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
-[data-variant="terminal"] .thumb-mark { font-family: var(--mono); font-size: 36px; letter-spacing: -0.02em; }
-[data-variant="terminal"] .modal-mark { font-family: var(--mono); font-size: 48px; }
-[data-variant="terminal"] .portrait-tag span:first-child { font-family: var(--mono); font-size: 16px; }
-[data-variant="terminal"] .bio-stats b { font-family: var(--mono); font-size: 24px; }
-[data-variant="terminal"] .nav-links { border-radius: 2px; }
-[data-variant="terminal"] .nav-link { border-radius: 0; }
-[data-variant="terminal"] .nav-cta { border-radius: 2px; }
-[data-variant="terminal"] .foot-mark { font-family: var(--mono); font-size: 18px; }
-[data-variant="terminal"] .proj-thumb { background: oklch(0.20 0.04 var(--hue, 30)); }
-[data-variant="terminal"] .modal-hero { background: oklch(0.20 0.05 var(--hue, 30)); }
-[data-variant="terminal"] .thumb-grid {
-  background-image:
-    linear-gradient(to right, rgba(230,244,236,.06) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(230,244,236,.06) 1px, transparent 1px);
-}
-
-/* ============================================================
-   Variant: Brutalist
-   ============================================================ */
-[data-variant="brutalist"] {
-  --bg: #f3f3f1;
-  --bg-alt: #0a0a0a;
-  --ink: #0a0a0a;
-  --ink-dim: rgba(10,10,10,.72);
-  --ink-faint: rgba(10,10,10,.46);
-  --line: rgba(10,10,10,.92);
-  --card: #ffffff;
-  --accent: #ff4d1f;
-  --accent-ink: #0a0a0a;
-  --display: 'Archivo', 'Helvetica Neue', system-ui, sans-serif;
-  --body: 'Archivo', 'Helvetica Neue', system-ui, sans-serif;
-  --mono: 'JetBrains Mono', ui-monospace, monospace;
-  --radius: 0px;
-  --caps: uppercase;
-}
-[data-variant="brutalist"] .hero-title {
-  font-weight: 900;
-  font-style: italic;
-  letter-spacing: -0.06em;
-  line-height: .88;
-  font-size: clamp(72px, 11vw, 180px);
-}
-[data-variant="brutalist"] .hero-title em {
-  font-style: italic;
-  font-weight: 900;
-  color: var(--accent);
-}
-[data-variant="brutalist"] .sec-title { font-weight: 900; font-style: italic; letter-spacing: -0.04em; font-size: 72px; }
-[data-variant="brutalist"] .sec-title-sm { font-size: 36px; }
-[data-variant="brutalist"] .modal-title { font-weight: 900; letter-spacing: -0.03em; }
-[data-variant="brutalist"] .contact-title { font-weight: 900; font-style: italic; letter-spacing: -0.04em; font-size: 88px; }
-[data-variant="brutalist"] .proj-title { font-weight: 900; letter-spacing: -0.03em; font-size: 28px; }
-[data-variant="brutalist"] .exp-what { font-weight: 700; font-family: var(--body); font-style: italic; }
-[data-variant="brutalist"] .bio-stats b { font-weight: 900; font-family: var(--body); font-size: 44px; line-height: .9; }
-[data-variant="brutalist"] .nav { background: var(--ink); color: var(--bg); }
-[data-variant="brutalist"] .nav .mark-glyph { color: var(--bg); }
-[data-variant="brutalist"] .nav .mark-name { color: color-mix(in oklab, var(--bg) 80%, transparent); }
-[data-variant="brutalist"] .nav-links { border-color: color-mix(in oklab, var(--bg) 30%, transparent); background: transparent; }
-[data-variant="brutalist"] .nav-link { color: color-mix(in oklab, var(--bg) 80%, transparent); }
-[data-variant="brutalist"] .nav-link:hover { color: var(--bg); }
-[data-variant="brutalist"] .nav-link.is-active { background: var(--accent); color: var(--ink); }
-[data-variant="brutalist"] .nav-cta { border-color: color-mix(in oklab, var(--bg) 30%, transparent); color: var(--bg); }
-[data-variant="brutalist"] .nav-cta:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); }
-[data-variant="brutalist"] .btn { border-radius: 0; font-weight: 700; }
-[data-variant="brutalist"] .chip { border-radius: 0; font-weight: 600; }
-[data-variant="brutalist"] .filter-bar { border-bottom: 2px solid var(--line); padding-bottom: 20px; }
-[data-variant="brutalist"] .work-grid { gap: 64px 0; }
-[data-variant="brutalist"] .proj { border-top: 2px solid var(--line); padding-top: 24px; padding-right: 32px; }
-[data-variant="brutalist"] .proj:nth-child(odd) { border-right: 2px solid var(--line); }
-[data-variant="brutalist"] .proj-thumb { border: 2px solid var(--line); border-radius: 0; }
-[data-variant="brutalist"] .thumb-mark { font-weight: 900; }
-[data-variant="brutalist"] .modal { border: 2px solid var(--line); border-radius: 0; }
-[data-variant="brutalist"] .modal-hero { border: 2px solid var(--line); border-radius: 0; }
-[data-variant="brutalist"] .modal-mark { font-weight: 900; font-style: italic; }
-[data-variant="brutalist"] .portrait { border: 2px solid var(--line); }
-[data-variant="brutalist"] .portrait-tag span:first-child { font-weight: 900; font-style: italic; font-size: 28px; }
-[data-variant="brutalist"] .side-card { border: 2px solid var(--line); }
-[data-variant="brutalist"] .email-card { border: 2px solid var(--line); }
-[data-variant="brutalist"] .socials-grid { border: 2px solid var(--line); }
-[data-variant="brutalist"] .sec-rule { background: var(--line); }
-[data-variant="brutalist"] .nav { border-bottom: 2px solid var(--line); }
-[data-variant="brutalist"] .foot { border-top: 2px solid var(--line); }
-[data-variant="brutalist"] .kv-list { border-top: 2px solid var(--line); }
-[data-variant="brutalist"] .kv-list li { border-bottom: 2px solid var(--line); }
-[data-variant="brutalist"] .bio-stats { border-top: 2px solid var(--line); border-bottom: 2px solid var(--line); }
-[data-variant="brutalist"] .bio-stats li { border-right: 2px solid var(--line); }
-[data-variant="brutalist"] .skill-row { border-bottom: 2px solid var(--line); }
-[data-variant="brutalist"] .exp-row { border-bottom: 2px solid var(--line); }
-[data-variant="brutalist"] .exp-list { border-top: 2px solid var(--line); }
-[data-variant="brutalist"] .grp-head { border-bottom: 2px solid var(--line); }
-[data-variant="brutalist"] .proj-thumb { background: var(--accent); }
-[data-variant="brutalist"] .thumb-mark { color: var(--ink); }
-[data-variant="brutalist"] .thumb-grid { mask-image: none; opacity: .25; }
-[data-variant="brutalist"] .modal-hero { background: var(--accent); }
-[data-variant="brutalist"] .modal-mark { color: var(--ink); }
-[data-variant="brutalist"] .stack-list li { border-radius: 0; font-weight: 600; }
-[data-variant="brutalist"] .proj-tags li { border-radius: 0; font-weight: 600; }
-[data-variant="brutalist"] .foot-top { border-radius: 0; font-weight: 600; }
-/* ============================================================
    Theme: Light Mode (Linen & Emerald)
    ============================================================ */
 [data-theme="light"] {
@@ -1242,21 +1109,6 @@ ul { list-style: none; margin: 0; padding: 0; }
 .chip { position: relative; }
 
 /* Modal entrance was already there — leave */
-
-/* Variant tweaks for new bits */
-[data-variant="terminal"] .marquee-item { font-family: var(--mono); font-size: 24px; }
-[data-variant="terminal"] .marquee-glyph { border-radius: 0; width: 10px; height: 10px; }
-[data-variant="terminal"] .sec-rule::after { background: var(--accent); }
-
-[data-variant="brutalist"] .marquee {
-  border-top: 2px solid var(--line); border-bottom: 2px solid var(--line);
-  background: var(--ink); color: var(--bg);
-}
-[data-variant="brutalist"] .marquee-item { font-style: italic; font-weight: 900; color: var(--bg); font-size: 56px; }
-[data-variant="brutalist"] .marquee-glyph { background: var(--accent); border-radius: 0; }
-[data-variant="brutalist"] .scroll-progress { height: 4px; }
-[data-variant="brutalist"] .sec-rule { background: var(--line); }
-[data-variant="brutalist"] .sec-rule::after { background: var(--accent); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -1774,6 +1626,9 @@ footer { padding: 40px var(--container-x); color: var(--ink-faint); font-family:
   pointer-events: none;
   transition: transform .25s cubic-bezier(.2,.7,.1,1), opacity .2s ease;
   overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  touch-action: pan-y;
 }
 .nav-drawer.is-open {
   transform: translateY(0);

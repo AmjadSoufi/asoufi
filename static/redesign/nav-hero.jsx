@@ -1,6 +1,8 @@
 // Navigation bar + hero section for the portfolio prototype.
 
-function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
+import { Reveal, ClipReveal, lockScroll, unlockScroll, trapTabKey } from "./utils.jsx";
+
+function NavBar({ active, onJump, theme, onToggleTheme }) {
   const items = [
     { id: "intro",   label: "Intro" },
     { id: "about",   label: "About" },
@@ -8,19 +10,46 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
     { id: "work",    label: "Work" },
     { id: "contact", label: "Contact" },
   ];
-  const isBrut = variant.grid === "swiss";
-  const logoSrc = isBrut || theme === "light" ? "static/images/logo-as-dark.png" : "static/images/logo-as-white.png";
+  const logoSrc = theme === "light" ? "static/images/logo-as-dark.png" : "static/images/logo-as-white.png";
 
-  // Mobile drawer: open state + scroll lock + close on Esc.
   const [menuOpen, setMenuOpen] = React.useState(false);
+  const drawerRef = React.useRef(null);
+  const toggleRef = React.useRef(null);
+  const brandRef = React.useRef(null);
+
+  // Match the CSS breakpoint so a hidden drawer never keeps scrolling locked.
+  React.useEffect(() => {
+    const desktop = window.matchMedia("(min-width: 721px)");
+    const onChange = () => { if (desktop.matches) setMenuOpen(false); };
+    desktop.addEventListener("change", onChange);
+    return () => desktop.removeEventListener("change", onChange);
+  }, []);
+
   React.useEffect(() => {
     if (!menuOpen) return;
-    const onKey = (e) => { if (e.key === "Escape") setMenuOpen(false); };
-    document.body.style.overflow = "hidden";
+    const drawer = drawerRef.current;
+    // Lock first so even a browser that scrolls while moving focus cannot
+    // lose the page position before lockScroll captures it.
+    lockScroll();
+    drawer?.querySelector("button")?.focus({ preventScroll: true });
+    const onKey = (e) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        setMenuOpen(false);
+      } else {
+        // The header X is the drawer's close control, so keep it in the
+        // keyboard loop even though it stays visually above the drawer.
+        trapTabKey(e, drawer, [toggleRef.current]);
+      }
+    };
     window.addEventListener("keydown", onKey);
     return () => {
-      document.body.style.overflow = "";
+      unlockScroll();
       window.removeEventListener("keydown", onKey);
+      // The hamburger is hidden after a desktop resize; use the brand instead.
+      const target = window.matchMedia("(min-width: 721px)").matches
+        ? brandRef.current : toggleRef.current;
+      target?.focus({ preventScroll: true });
     };
   }, [menuOpen]);
   const jumpAndClose = (id) => { setMenuOpen(false); onJump(id); };
@@ -28,11 +57,12 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
   return (
     <React.Fragment>
       <header className="nav" style={{
-        borderBottom: isBrut ? `2px solid ${variant.ink}` : `1px solid ${variant.line}`,
-        background: variant.bg + "cc",
+        // Tokens (not the variant object) so the nav follows [data-theme].
+        borderBottom: "1px solid var(--line)",
+        background: "color-mix(in srgb, var(--bg) 80%, transparent)",
       }}>
         <div className="nav-inner">
-          <button className="nav-mark" onClick={() => onJump("intro")} aria-label="Amjad Soufi — back to top">
+          <button ref={brandRef} className="nav-mark" onClick={() => onJump("intro")} aria-label="Amjad Soufi — back to top">
             <img className="mark-logo" src={logoSrc} alt="" aria-hidden="true" />
             <span className="mark-dot" aria-hidden="true" />
             <span className="mark-name" aria-hidden="true">Amjad Soufi</span>
@@ -42,6 +72,7 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
             {items.map((it, i) => (
               <button
                 key={it.id}
+                data-testid={"nav-link-" + it.id}
                 className={"nav-link" + (active === it.id ? " is-active" : "")}
                 onClick={() => onJump(it.id)}
               >
@@ -72,13 +103,15 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
 
             <button className="nav-cta" onClick={() => onJump("contact")}>
               <span className="dot-pulse" />
-              {variant.grid === "swiss" ? "Available →" : "Available"}
+              Available
             </button>
 
             {/* Mobile-only hamburger. CSS hides this above 720px and hides the
                 pill rail below 720px, so the two never show at once. */}
             <button
               className={"nav-hamburger" + (menuOpen ? " is-open" : "")}
+              ref={toggleRef}
+              data-testid="nav-toggle"
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? "Close menu" : "Open menu"}
               aria-expanded={menuOpen}
@@ -100,8 +133,11 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
         drawer paints opaquely on top of everything.
       */}
       <div
+        ref={drawerRef}
+        tabIndex={-1}
         id="mobile-nav"
         className={"nav-drawer" + (menuOpen ? " is-open" : "")}
+        data-testid="nav-drawer"
         role="dialog"
         aria-modal="true"
         aria-label="Site navigation"
@@ -112,6 +148,7 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
             <li key={it.id}>
               <button
                 className={"nav-drawer-link" + (active === it.id ? " is-active" : "")}
+                data-testid={"nav-drawer-link-" + it.id}
                 onClick={() => jumpAndClose(it.id)}
               >
                 <span className="nav-drawer-num">0{i + 1}</span>
@@ -130,17 +167,18 @@ function NavBar({ variant, active, onJump, theme, onToggleTheme }) {
   );
 }
 
-function Hero({ variant, data, onJump, onOpenProject }) {
+function Hero({ data, onJump, onOpenProject }) {
   const [clock, setClock] = React.useState(() => new Date());
   React.useEffect(() => {
     const i = setInterval(() => setClock(new Date()), 1000 * 30);
     return () => clearInterval(i);
   }, []);
-  const time = clock.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
-
-  const isTerm = variant.grid === "ledger";
-  const isBrut = variant.grid === "swiss";
-  const isEd   = variant.grid === "magazine";
+  const time = clock.toLocaleTimeString("en-GB", {
+    timeZone: "Europe/Brussels",
+    hour: "2-digit",
+    minute: "2-digit",
+    timeZoneName: "short",
+  });
 
   return (
     <section id="intro" className="hero">
@@ -154,7 +192,7 @@ function Hero({ variant, data, onJump, onOpenProject }) {
         <Reveal delay={60}>
           <div className="meta-row">
             <span className="meta-k">{data.location}</span>
-            <span className="meta-v"><span className="dot-pulse" /> {time} CET</span>
+            <span className="meta-v" data-testid="brussels-clock"><span className="dot-pulse" /> {time}</span>
           </div>
         </Reveal>
         <Reveal delay={120}>
@@ -169,36 +207,18 @@ function Hero({ variant, data, onJump, onOpenProject }) {
         <Reveal delay={120} y={24}>
           <p className="eyebrow">
             <span className="eyebrow-line" />
-            {isTerm ? "$ whoami" : "Currently"}
+            Currently
           </p>
         </Reveal>
 
         <Reveal delay={200} y={28}>
           <h1 className="hero-title">
-            {isEd && (
-              <ClipReveal stagger={110} delay={50}>
-                <span>Full-stack</span>
-                <span><em>developer</em></span>
-                <span>building careful</span>
-                <span>web products.</span>
-              </ClipReveal>
-            )}
-            {isTerm && (
-              <ClipReveal stagger={100} delay={50}>
-                <span>building.web(</span>
-                <span>&nbsp;&nbsp;careful,</span>
-                <span>&nbsp;&nbsp;<em>considered</em>,</span>
-                <span>&nbsp;&nbsp;fast</span>
-                <span>);<span className="caret" /></span>
-              </ClipReveal>
-            )}
-            {isBrut && (
-              <ClipReveal stagger={120} delay={50}>
-                <span>Full</span>
-                <span>Stack <em>Developer</em></span>
-                <span>Index ’24 ↗</span>
-              </ClipReveal>
-            )}
+            <ClipReveal stagger={110} delay={50}>
+              <span>Full-stack</span>
+              <span><em>developer</em></span>
+              <span>building careful</span>
+              <span>web products.</span>
+            </ClipReveal>
           </h1>
         </Reveal>
 
@@ -235,7 +255,7 @@ function Hero({ variant, data, onJump, onOpenProject }) {
       <Reveal delay={500} className="hero-side">
         <div className="side-card">
           <div className="card-head">
-            <span>{isTerm ? "// now-playing" : "Now"}</span>
+            <span>Now</span>
             <span className="dot-pulse" />
           </div>
           <ul className="card-list">
@@ -243,7 +263,7 @@ function Hero({ variant, data, onJump, onOpenProject }) {
             <li><span>Shipping</span><b>231InCloud</b></li>
             <li><span>Studying</span><b>Full-stack Web</b></li>
           </ul>
-          <button className="card-foot" onClick={() => onOpenProject("kanban")}>
+          <button className="card-foot" onClick={(e) => onOpenProject("kanban", e.currentTarget)}>
             Latest case study →
           </button>
         </div>
@@ -251,10 +271,10 @@ function Hero({ variant, data, onJump, onOpenProject }) {
 
       <div className="hero-scroll">
         <span className="scroll-bar" />
-        <span>{isTerm ? "scroll ↓" : "Scroll"}</span>
+        <span>Scroll</span>
       </div>
     </section>
   );
 }
 
-Object.assign(window, { NavBar, Hero });
+export { NavBar, Hero };

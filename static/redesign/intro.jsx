@@ -1,7 +1,9 @@
 // Full-screen intro overlay: plays the intro video once per session,
 // then fades out and unlocks scrolling. Skip button (or Esc) exits early.
 
-function Intro({ variant, onDone, forcePlay = false }) {
+import { safeStorage, lockScroll, unlockScroll } from "./utils.jsx";
+
+function Intro({ onDone, forcePlay = false }) {
   // Decide whether to show the intro:
   // - Skipped automatically if user has seen it this session (unless forcePlay).
   // - Forced via Tweak / replay button.
@@ -15,7 +17,7 @@ function Intro({ variant, onDone, forcePlay = false }) {
   const conn = typeof navigator !== "undefined" ? (navigator.connection || {}) : {};
   const dataSaver = conn.saveData === true || /(^|-)2g$/.test(conn.effectiveType || "");
   const skipIntro = respectMotion || dataSaver;
-  const initialShow = !skipIntro && (forcePlay || !(typeof localStorage !== "undefined" && localStorage.getItem(seenKey)));
+  const initialShow = !skipIntro && (forcePlay || !safeStorage.get(seenKey));
   const [phase, setPhase] = React.useState(initialShow ? "playing" : "done");
   const videoRef = React.useRef(null);
   const timerRef = React.useRef(null);
@@ -38,20 +40,19 @@ function Intro({ variant, onDone, forcePlay = false }) {
     }
   }, []);
 
-  // Lock scroll while intro is on-screen
+  // Lock scroll while intro is on-screen. Reference-counted so the intro
+  // releasing cannot unlock the page while another overlay still needs it.
   React.useEffect(() => {
-    if (phase === "playing" || phase === "fading") {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = "hidden";
-      return () => { document.body.style.overflow = prev; };
-    }
+    if (phase !== "playing" && phase !== "fading") return;
+    lockScroll();
+    return () => unlockScroll();
   }, [phase]);
 
   // When the video ends or skip is pressed, run the fade then notify.
   const finish = React.useCallback(() => {
     if (phase !== "playing") return;
     setPhase("fading");
-    try { localStorage.setItem(seenKey, "1"); } catch (e) {}
+    safeStorage.set(seenKey, "1");
     clearTimeout(timerRef.current);
     timerRef.current = setTimeout(() => {
       setPhase("done");
@@ -110,7 +111,7 @@ function Intro({ variant, onDone, forcePlay = false }) {
   React.useEffect(() => {
     if (forcePlay && phase === "done") {
       setPhase("playing");
-      try { localStorage.removeItem(seenKey); } catch (e) {}
+      safeStorage.remove(seenKey);
     }
   }, [forcePlay]); // eslint-disable-line
 
@@ -150,4 +151,4 @@ function Intro({ variant, onDone, forcePlay = false }) {
   );
 }
 
-Object.assign(window, { Intro });
+export { Intro };

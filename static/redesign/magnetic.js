@@ -10,37 +10,32 @@
   var PULL   = 0.42; // fraction of offset to apply to the button
   var INNER  = 0.28; // extra parallax on the button's inner content
 
-  function onMove(e) {
-    var mx = e.clientX;
-    var my = e.clientY;
+  // The .btn set changes as the app renders (hero CTA, modal links, …), so the
+  // nodes are cached and refreshed only when the DOM changes — not on every
+  // pointer event.
+  var buttons = [];
+  var raf = 0;
+  var mx = 0, my = 0;
 
-    document.querySelectorAll(".btn").forEach(function (btn) {
-      var r  = btn.getBoundingClientRect();
-      var cx = r.left + r.width  / 2;
-      var cy = r.top  + r.height / 2;
-      var dx = mx - cx;
-      var dy = my - cy;
-      var dist = Math.hypot(dx, dy);
+  function collect() {
+    buttons = Array.prototype.slice.call(document.querySelectorAll(".btn"));
+  }
 
-      if (dist < RADIUS) {
-        // Strength ramps from 0 (at edge) to PULL (at center)
-        var t  = 1 - dist / RADIUS;
-        var tx = dx * t * PULL;
-        var ty = dy * t * PULL;
+  function pull(btn, dx, dy, dist) {
+    // Strength ramps from 0 (at edge) to PULL (at center)
+    var t  = 1 - dist / RADIUS;
+    var tx = dx * t * PULL;
+    var ty = dy * t * PULL;
 
-        btn.style.transition = "background .2s, color .2s, border-color .2s";
-        btn.style.transform  = "translate(" + tx + "px," + ty + "px)";
+    btn.style.transition = "background .2s, color .2s, border-color .2s";
+    btn.style.transform  = "translate(" + tx + "px," + ty + "px)";
 
-        // Subtle inner-content parallax (text drifts slightly more)
-        var inner = btn.querySelector(".btn-arrow") || btn.querySelector("span");
-        if (inner) {
-          inner.style.transition = "none";
-          inner.style.transform  = "translate(" + (tx * INNER) + "px," + (ty * INNER) + "px)";
-        }
-      } else {
-        release(btn);
-      }
-    });
+    // Subtle inner-content parallax (text drifts slightly more)
+    var inner = btn.querySelector(".btn-arrow") || btn.querySelector("span");
+    if (inner) {
+      inner.style.transition = "none";
+      inner.style.transform  = "translate(" + (tx * INNER) + "px," + (ty * INNER) + "px)";
+    }
   }
 
   function release(btn) {
@@ -55,11 +50,41 @@
     }
   }
 
+  // One pass per animation frame, using the latest pointer position, instead of
+  // a full layout read for every mousemove event.
+  function apply() {
+    raf = 0;
+    for (var i = 0; i < buttons.length; i++) {
+      var btn = buttons[i];
+      var r   = btn.getBoundingClientRect();
+      var dx  = mx - (r.left + r.width  / 2);
+      var dy  = my - (r.top  + r.height / 2);
+      var dist = Math.hypot(dx, dy);
+
+      if (dist < RADIUS) pull(btn, dx, dy, dist);
+      else release(btn);
+    }
+  }
+
+  function onMove(e) {
+    mx = e.clientX;
+    my = e.clientY;
+    if (raf) return;
+    raf = requestAnimationFrame(apply);
+  }
+
   function onLeave() {
-    document.querySelectorAll(".btn").forEach(release);
+    for (var i = 0; i < buttons.length; i++) release(buttons[i]);
   }
 
   function setup() {
+    collect();
+    // React mounts/unmounts buttons (modal, drawer); keep the cache in sync.
+    // childList only — this script writes style attributes, so observing
+    // attributes would feed back into itself.
+    if (window.MutationObserver) {
+      new MutationObserver(collect).observe(document.body, { childList: true, subtree: true });
+    }
     document.addEventListener("mousemove", onMove, { passive: true });
     document.addEventListener("mouseleave", onLeave);
   }

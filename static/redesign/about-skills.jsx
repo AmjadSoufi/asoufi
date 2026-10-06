@@ -1,5 +1,7 @@
 // About + Skills + Experience sections.
 
+import { Reveal, CountUp, useInView } from "./utils.jsx";
+
 function SectionHead({ num, title, count, smTitle, smHead }) {
   const [ref, seen] = useInView(0.2);
   return (
@@ -12,11 +14,10 @@ function SectionHead({ num, title, count, smTitle, smHead }) {
   );
 }
 
-function About({ variant, data }) {
-  const isTerm = variant.grid === "ledger";
+function About({ data }) {
   return (
     <section id="about" className="sec sec-about">
-      <SectionHead num={isTerm ? "// 02" : "02"} title={isTerm ? "about.md" : "About"} />
+      <SectionHead num="02" title="About" />
 
       <div className="about-grid">
         <Reveal delay={100} className="about-portrait">
@@ -39,7 +40,7 @@ function About({ variant, data }) {
               <span>years coding</span>
             </li>
             <li>
-              <b><CountUp to={12} pad={2} /></b>
+              <b><CountUp to={data.projects.length} pad={2} /></b>
               <span>projects shipped</span>
             </li>
             <li>
@@ -88,8 +89,7 @@ function SkillRow({ skill, idx }) {
   );
 }
 
-function Skills({ variant, data }) {
-  const isTerm = variant.grid === "ledger";
+function Skills({ data }) {
   const groups = React.useMemo(() => {
     const by = {};
     data.skills.forEach((s) => { (by[s.tag] ||= []).push(s); });
@@ -98,7 +98,7 @@ function Skills({ variant, data }) {
 
   return (
     <section id="skills" className="sec sec-skills">
-      <SectionHead num={isTerm ? "// 03" : "03"} title={isTerm ? "skills/" : "Skills"} />
+      <SectionHead num="03" title="Skills" />
 
       <div className="skills-wrap">
         {groups.map(([tag, items], gi) => (
@@ -119,11 +119,10 @@ function Skills({ variant, data }) {
   );
 }
 
-function Experience({ variant, data }) {
-  const isTerm = variant.grid === "ledger";
+function Experience({ data }) {
   return (
     <section className="sec sec-exp">
-      <SectionHead num={isTerm ? "// 04" : "04"} title={isTerm ? "timeline.log" : "Timeline"} smTitle smHead />
+      <SectionHead num="04" title="Timeline" smTitle smHead />
 
       <ul className="exp-list">
         {data.experience.map((e, i) => (
@@ -138,4 +137,4 @@ function Experience({ variant, data }) {
   );
 }
 
-Object.assign(window, { About, Skills, Experience, SectionHead });
+export { About, Skills, Experience, SectionHead };

@@ -1,7 +1,7 @@
 // Portfolio content for Amjad Soufi.
-// Source of truth: the original asoufi project. Descriptions / GitHub /
-// live-demo links are taken from static/data/projectData.json.
-window.PORTFOLIO = {
+// Single source of truth for site content: the React app renders it, and the
+// no-JS fallback in index.html mirrors it.
+export const PORTFOLIO = {
   name: "Amjad Soufi",
   handle: "asoufi",
   role: "Full-Stack Developer",
@@ -16,7 +16,7 @@ window.PORTFOLIO = {
   social: [
     { label: "GitHub",   handle: "@AmjadSoufi",                            href: "https://github.com/AmjadSoufi" },
     { label: "LinkedIn", handle: "amjad-soufi",                            href: "https://be.linkedin.com/in/amjad-soufi-57794b316" },
-    { label: "Email",    handle: "amjad.soufi@student.arteveldehs.be",     href: "mailto:amjad.soufi@student.arteveldehs.be" },
+    { label: "Email",    handle: "amjadsoufi5588@gmail.com",     href: "mailto:amjadsoufi5588@gmail.com" },
   ],
   skills: [
     { name: "React",      tag: "Framework", years: 2, level: 0.78 },

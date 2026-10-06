@@ -1,5 +1,8 @@
 // Work section (filterable project grid) + project detail modal + contact + footer.
 
+import { SectionHead } from "./about-skills.jsx";
+import { Reveal, useTilt, lockScroll, unlockScroll, trapTabKey } from "./utils.jsx";
+
 function ProjectThumb({ project }) {
   const tiltRef = useTilt(6);
   return (
@@ -56,12 +59,18 @@ const FILTER_GROUPS = [
   { label: "Language", techs: ["JavaScript", "TypeScript", "Twig"] },
 ];
 
-function Work({ variant, data, onOpenProject }) {
-  const isTerm = variant.grid === "ledger";
+function Work({ data, onOpenProject }) {
 
   // Pre-compute the normalized tech list per project once.
   const projTechs = React.useMemo(
     () => data.projects.map((p) => (p.stack || []).map(normalizeTech)),
+    [data.projects]
+  );
+
+  // Stable catalogue number: the project's position in the full list, so the
+  // displayed number does not change when a filter narrows the set.
+  const catalogueNumber = React.useMemo(
+    () => new Map(data.projects.map((p, i) => [p.id, i + 1])),
     [data.projects]
   );
 
@@ -84,7 +93,7 @@ function Work({ variant, data, onOpenProject }) {
 
   return (
     <section id="work" className="sec sec-work">
-      <SectionHead num={isTerm ? "// 05" : "05"} title={isTerm ? "work/" : "Selected work"} count={`${shown.length} / ${data.projects.length}`} />
+      <SectionHead num="05" title="Selected work" count={`${shown.length} / ${data.projects.length}`} />
 
       <Reveal className="filter-bar filter-bar--grouped">
         <button
@@ -124,7 +133,8 @@ function Work({ variant, data, onOpenProject }) {
           >
             <button
               className="proj-btn"
-              onClick={() => onOpenProject(p.id)}
+              data-testid="project-card"
+              onClick={(e) => onOpenProject(p.id, e.currentTarget)}
               onMouseEnter={() => setHover(p.id)}
               onMouseLeave={() => setHover(null)}
               onFocus={() => setHover(p.id)}
@@ -135,7 +145,7 @@ function Work({ variant, data, onOpenProject }) {
               <div className="proj-meta">
                 <div className="proj-head">
                   <h3 className="proj-title">
-                    <span className="proj-idx">{String(i + 1).padStart(2, "0")}</span>
+                    <span className="proj-idx">{String(catalogueNumber.get(p.id)).padStart(2, "0")}</span>
                     <span>{p.title}</span>
                   </h3>
                   <span className="proj-year">{p.year}</span>
@@ -153,7 +163,7 @@ function Work({ variant, data, onOpenProject }) {
   );
 }
 
-function ProjectModal({ variant, project, onClose }) {
+function ProjectModal({ project, onClose }) {
   const ref = React.useRef(null);
   const prevActiveRef = React.useRef(null);
 
@@ -163,27 +173,15 @@ function ProjectModal({ variant, project, onClose }) {
     // Focus the dialog so screen readers announce it and Tab traps inside it.
     if (ref.current) ref.current.focus();
 
-    const getFocusable = () =>
-      ref.current
-        ? ref.current.querySelectorAll(
-            'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
-          )
-        : [];
-
     const onKey = (e) => {
-      if (e.key === "Escape") { onClose(); return; }
-      if (e.key !== "Tab") return;
-      const f = getFocusable();
-      if (!f.length) { e.preventDefault(); return; }
-      const first = f[0], last = f[f.length - 1];
-      if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
-      else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      if (e.key === "Escape") { e.preventDefault(); onClose(); return; }
+      trapTabKey(e, ref.current);
     };
     window.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
+    lockScroll();
     return () => {
       window.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
+      unlockScroll();
       if (prevActiveRef.current && typeof prevActiveRef.current.focus === "function") {
         prevActiveRef.current.focus();
       }
@@ -191,12 +189,12 @@ function ProjectModal({ variant, project, onClose }) {
   }, [project, onClose]);
 
   if (!project) return null;
-  const isTerm = variant.grid === "ledger";
 
   return (
     <div className="modal-veil" onMouseDown={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div
         className="modal"
+        data-testid="project-modal"
         ref={ref}
         role="dialog"
         aria-modal="true"
@@ -207,9 +205,9 @@ function ProjectModal({ variant, project, onClose }) {
         <header className="modal-head">
           <div className="modal-head-l">
             <span className="modal-tag">{project.kind} · {project.year}</span>
-            <h3 id="modal-title" className="modal-title">{project.title}</h3>
+            <h3 id="modal-title" data-testid="modal-title" className="modal-title">{project.title}</h3>
           </div>
-          <button className="modal-x" onClick={onClose} aria-label="Close">
+          <button className="modal-x" data-testid="modal-close" onClick={onClose} aria-label="Close">
             <span>Close</span>
             <span className="kbd">esc</span>
           </button>
@@ -235,9 +233,7 @@ function ProjectModal({ variant, project, onClose }) {
             <h4 className="m-h">Overview</h4>
             <p className="prose">{project.blurb}</p>
             <p className="prose">
-              {isTerm
-                ? "// notes: focused on developer ergonomics, keyboard-first flows, and a build pipeline that stays under 200ms cold."
-                : "The brief was simple and the surface was constrained — which is the fun part. I focused on the smallest possible product that still felt complete: clear hierarchy, opinionated defaults, and one or two moments of personality."}
+              The brief was simple and the surface was constrained — which is the fun part. I focused on the smallest possible product that still felt complete: clear hierarchy, opinionated defaults, and one or two moments of personality.
             </p>
             <h4 className="m-h">My role</h4>
             <p className="prose">{project.role}</p>
@@ -267,29 +263,38 @@ function ProjectModal({ variant, project, onClose }) {
   );
 }
 
-function Contact({ variant, data, onJump }) {
-  const isTerm = variant.grid === "ledger";
+function Contact({ data }) {
   const [copied, setCopied] = React.useState(false);
-  const email = "amjad.soufi@student.arteveldehs.be";
-  const copy = () => {
-    navigator.clipboard?.writeText(email);
+  const copiedTimer = React.useRef(null);
+  const emailContact = data.social.find((s) => s.label === "Email");
+  const email = emailContact.handle;
+
+  React.useEffect(() => () => clearTimeout(copiedTimer.current), []);
+
+  const copy = async () => {
+    try {
+      // Rejects when the clipboard is blocked/denied; undefined in some
+      // contexts, which throws on access — both must not claim success.
+      await navigator.clipboard.writeText(email);
+    } catch (e) {
+      return;
+    }
     setCopied(true);
-    setTimeout(() => setCopied(false), 1600);
+    clearTimeout(copiedTimer.current);
+    copiedTimer.current = setTimeout(() => setCopied(false), 1600);
   };
 
   return (
     <section id="contact" className="sec sec-contact">
-      <SectionHead num={isTerm ? "// 06" : "06"} title={isTerm ? "contact.sh" : "Contact"} />
+      <SectionHead num="06" title="Contact" />
 
       <div className="contact-grid">
         <Reveal className="contact-pitch">
           <p className="contact-lead">
-            {isTerm
-              ? "$ echo \"looking for a first full-time role\""
-              : "I’m looking for a first full-time role —"}
+            I’m looking for a first full-time role —
           </p>
           <h3 className="contact-title">
-            {isTerm ? "Let’s build something." : "Tell me what you’re working on."}
+            Tell me what you’re working on.
           </h3>
           <p className="prose">
             Junior front-end or full-stack, ideally with a small, opinionated team that ships often. Open to internships and freelance, too.
@@ -304,7 +309,7 @@ function Contact({ variant, data, onJump }) {
               <span className={"email-state" + (copied ? " is-on" : "")}>{copied ? "copied ✓" : "copy"}</span>
             </button>
           </div>
-          <a className="btn btn-primary btn-lg" href={`mailto:${email}`}>
+          <a className="btn btn-primary btn-lg" href={emailContact.href}>
             <span>Say hello</span><span className="btn-arrow">↗</span>
           </a>
           <div className="socials-grid">
@@ -322,9 +327,8 @@ function Contact({ variant, data, onJump }) {
   );
 }
 
-function Footer({ variant, onJump }) {
-  const isBrut = variant.grid === "swiss";
-  const logoSrc = isBrut ? "static/images/logo-as-dark.png" : "static/images/logo-as-white.png";
+function Footer({ theme, onJump }) {
+  const logoSrc = theme === "light" ? "static/images/logo-as-dark.png" : "static/images/logo-as-white.png";
   return (
     <footer className="foot">
       <div className="foot-l">
@@ -342,4 +346,4 @@ function Footer({ variant, onJump }) {
   );
 }
 
-Object.assign(window, { Work, ProjectModal, Contact, Footer, ProjectThumb });
+export { Work, ProjectModal, Contact, Footer, ProjectThumb };

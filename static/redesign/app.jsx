@@ -1,48 +1,34 @@
 // Root app for the Amjad Soufi portfolio redesign.
-// Locked to the "editorial" variant for production; the tweaks-panel dev UI is
-// intentionally not shipped here.
+// The single visual variant is "editorial"; its tokens live in the stylesheet
+// (data-variant="editorial" is pinned in index.html).
+
+import { safeStorage, scrollToId, ScrollProgress, Marquee } from "./utils.jsx";
+import { Intro } from "./intro.jsx";
+import { NavBar, Hero } from "./nav-hero.jsx";
+import { About, Skills, Experience } from "./about-skills.jsx";
+import { Work, ProjectModal, Contact, Footer } from "./work-contact.jsx";
+import { PORTFOLIO } from "./data.js";
 
 function App() {
-  const VARIANT_KEY = "editorial";
-  
-  const [theme, setTheme] = React.useState(() => {
-    return localStorage.getItem("theme") || "dark";
-  });
-
-  const baseVariant = window.VARIANTS[VARIANT_KEY];
-  
-  const variant = React.useMemo(() => {
-    if (theme === "light") {
-      return {
-        ...baseVariant,
-        bg: "#f7f4ee",
-        bgAlt: "#efebe2",
-        ink: "#1a202c",
-        inkDim: "rgba(26, 32, 44, 0.76)",
-        inkFaint: "rgba(26, 32, 44, 0.50)",
-        line: "rgba(26, 32, 44, 0.12)",
-        card: "#ffffff",
-        accent: "#2d7a4d",
-        accentInk: "#ffffff",
-      };
-    }
-    return baseVariant;
-  }, [baseVariant, theme]);
+  const [theme, setTheme] = React.useState(() => safeStorage.get("theme", "dark"));
 
   const [active, setActive] = React.useState("intro");
   const [openId, setOpenId] = React.useState(null);
   const [introReplay, setIntroReplay] = React.useState(0);
   const [, setIntroOver] = React.useState(false);
 
-  const data = window.PORTFOLIO;
+  const data = PORTFOLIO;
 
   React.useEffect(() => {
-    document.documentElement.setAttribute("data-variant", VARIANT_KEY);
     document.documentElement.setAttribute("data-theme", theme);
-    document.documentElement.style.setProperty("--accent", variant.accent);
+    // --bg is theme-dependent now, so read the resolved token instead of a
+    // hardcoded color.
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta) meta.setAttribute("content", variant.bg);
-  }, [variant.accent, variant.bg, theme]);
+    if (meta) {
+      const bg = getComputedStyle(document.documentElement).getPropertyValue("--bg").trim();
+      if (bg) meta.setAttribute("content", bg);
+    }
+  }, [theme]);
 
   const toggleTheme = (e) => {
     const nextTheme = theme === "dark" ? "light" : "dark";
@@ -50,7 +36,7 @@ function App() {
 
     if (!document.startViewTransition || !btn) {
       setTheme(nextTheme);
-      localStorage.setItem("theme", nextTheme);
+      safeStorage.set("theme", nextTheme);
       return;
     }
 
@@ -68,7 +54,7 @@ function App() {
 
     const transition = document.startViewTransition(() => {
       setTheme(nextTheme);
-      localStorage.setItem("theme", nextTheme);
+      safeStorage.set("theme", nextTheme);
     });
     transition.ready.catch(() => {});
   };
@@ -89,8 +75,12 @@ function App() {
   }, []);
 
   const jump = (id) => scrollToId(id, 72);
-  const open = (id) => setOpenId(id);
-  const close = () => setOpenId(null);
+  const open = (id, trigger) => {
+    // Safari does not focus buttons on mouse click; remember the real opener.
+    trigger?.focus({ preventScroll: true });
+    setOpenId(id);
+  };
+  const close = React.useCallback(() => setOpenId(null), []);
 
   const project = data.projects.find((p) => p.id === openId);
 
@@ -109,39 +99,37 @@ function App() {
     <div className="app" data-screen-label="Portfolio">
       <Intro
         key={introReplay}
-        variant={variant}
         forcePlay={introReplay > 0}
         onDone={() => setIntroOver(true)}
       />
       <ScrollProgress />
       <NavBar
-        variant={variant}
         active={active}
         onJump={jump}
         theme={theme}
         onToggleTheme={toggleTheme}
       />
 
-      <Hero variant={variant} data={data} onJump={jump} onOpenProject={open} />
+      <Hero data={data} onJump={jump} onOpenProject={open} />
 
       <main>
         <div className="container">
-          <About variant={variant} data={data} />
-          <Skills variant={variant} data={data} />
+          <About data={data} />
+          <Skills data={data} />
         </div>
 
-        <Marquee items={marqueeItems} variant={variant} />
+        <Marquee items={marqueeItems} />
 
         <div className="container">
-          <Experience variant={variant} data={data} />
-          <Work variant={variant} data={data} onOpenProject={open} />
-          <Contact variant={variant} data={data} onJump={jump} />
+          <Experience data={data} />
+          <Work data={data} onOpenProject={open} />
+          <Contact data={data} />
         </div>
       </main>
 
-      <Footer variant={variant} onJump={jump} />
+      <Footer theme={theme} onJump={jump} />
 
-      <ProjectModal variant={variant} project={project} onClose={close} />
+      <ProjectModal project={project} onClose={close} />
     </div>
   );
 }

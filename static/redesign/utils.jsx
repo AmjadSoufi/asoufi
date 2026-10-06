@@ -5,6 +5,90 @@
 const __PERF_LITE = typeof document !== "undefined" &&
   document.documentElement.getAttribute("data-perf") === "lite";
 
+// localStorage that can never throw. Storage is absent in some sandboxes and
+// throws SecurityError when blocked (Safari private mode, storage-denied
+// iframes) or QuotaExceededError when full — an unguarded read inside a
+// useState initializer would take the whole app down.
+const safeStorage = {
+  get(key, fallback = null) {
+    try {
+      const value = window.localStorage.getItem(key);
+      return value === null ? fallback : value;
+    } catch (e) {
+      return fallback;
+    }
+  },
+  set(key, value) {
+    try {
+      window.localStorage.setItem(key, value);
+    } catch (e) {}
+  },
+  remove(key) {
+    try {
+      window.localStorage.removeItem(key);
+    } catch (e) {}
+  },
+};
+
+// Reference-counted scroll lock. Several overlays can require the lock at the
+// same time (intro, mobile drawer, project modal); scrolling is restored only
+// when the LAST holder releases it, so one component's cleanup can never
+// unlock the page out from under another.
+let scrollLocks = 0;
+let bodyStyleBeforeScrollLock = null;
+let scrollPositionBeforeLock = { x: 0, y: 0 };
+
+function lockScroll() {
+  if (scrollLocks === 0) {
+    const body = document.body;
+    bodyStyleBeforeScrollLock = body.getAttribute("style");
+    scrollPositionBeforeLock = { x: window.scrollX, y: window.scrollY };
+    // overflow:hidden alone does not stop touch scrolling in iOS Safari.
+    // Pin the body at its current viewport position until every overlay closes.
+    body.style.position = "fixed";
+    body.style.top = `-${scrollPositionBeforeLock.y}px`;
+    body.style.left = `-${scrollPositionBeforeLock.x}px`;
+    body.style.width = "100%";
+    body.style.overflow = "hidden";
+  }
+  scrollLocks += 1;
+}
+
+function unlockScroll() {
+  if (scrollLocks === 0) return; // never let a release unbalance the count
+  scrollLocks -= 1;
+  if (scrollLocks === 0) {
+    const body = document.body;
+    if (bodyStyleBeforeScrollLock === null) body.removeAttribute("style");
+    else body.setAttribute("style", bodyStyleBeforeScrollLock);
+    window.scrollTo(scrollPositionBeforeLock.x, scrollPositionBeforeLock.y);
+    bodyStyleBeforeScrollLock = null;
+    scrollPositionBeforeLock = { x: 0, y: 0 };
+  }
+}
+
+// Keep Tab within a dialog, including when the container itself has focus.
+function trapTabKey(event, dialog, additionalFocusable = []) {
+  if (event.key !== "Tab" || !dialog) return;
+  const focusable = [...dialog.querySelectorAll(
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  ), ...additionalFocusable].filter((el) =>
+    el && el.tabIndex >= 0 && el.getClientRects().length > 0
+  );
+  event.preventDefault();
+  if (!focusable.length) {
+    dialog.focus();
+    return;
+  }
+  // Handle every Tab explicitly: Safari's system keyboard settings can skip
+  // buttons in the native tab order even though they accept programmatic focus.
+  const index = focusable.indexOf(document.activeElement);
+  const next = index === -1
+    ? (event.shiftKey ? focusable.length - 1 : 0)
+    : (index + (event.shiftKey ? -1 : 1) + focusable.length) % focusable.length;
+  focusable[next].focus();
+}
+
 // IntersectionObserver-based reveal-on-scroll.
 function useReveal(threshold = 0.15) {
   const ref = React.useRef(null);
@@ -32,7 +116,10 @@ function Reveal({ delay = 0, y = 14, as: Tag = "div", className, style, children
     transform: shown ? "translate3d(0,0,0)" : `translate3d(0, ${y}px, 0)`,
     opacity: shown ? 1 : 0,
     transition: `transform 900ms cubic-bezier(.2,.7,.1,1) ${delay}ms, opacity 700ms ease ${delay}ms`,
-    willChange: "transform, opacity",
+    // Promote only while the element is still waiting to reveal. Once the
+    // transition starts the browser composites transform/opacity itself, so
+    // leaving this on permanently would pin a layer per revealed element.
+    willChange: shown ? undefined : "transform, opacity",
     ...style,
   };
   return <Tag ref={ref} className={className} style={s} {...rest}>{children}</Tag>;
@@ -212,7 +299,7 @@ function ScrollProgress() {
 }
 
 // Infinite horizontal marquee of items.
-function Marquee({ items, speed = 60, variant }) {
+function Marquee({ items, speed = 60 }) {
   const dur = `${items.length * speed / 6}s`;
   const repeated = [...items, ...items, ...items];
   return (
@@ -229,10 +316,10 @@ function Marquee({ items, speed = 60, variant }) {
   );
 }
 
-Object.assign(window, {
+export {
   useReveal, Reveal, ClipReveal,
   useCountUp, CountUp,
   useInView, useScrollProgress, useTilt,
-  scrollToId, withAlpha,
+  scrollToId, withAlpha, safeStorage, lockScroll, unlockScroll, trapTabKey,
   ScrollProgress, Marquee,
-});
+};

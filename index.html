@@ -90,6 +90,10 @@
          from ever being applied on weak hardware. Synchronous on purpose. -->
     <script src="static/redesign/perf-detect.js"></script>
 
+    <!-- Apply the persisted theme BEFORE the stylesheet evaluates so light-mode
+         users never see a flash of the dark palette. Synchronous, CSP-clean. -->
+    <script src="static/redesign/theme-init.js"></script>
+
     <!-- Redesign styles -->
     <link rel="stylesheet" href="static/css/redesign.min.css" />
   </head>
@@ -127,7 +131,7 @@
           <ul class="ssr-socials" aria-label="Find me online">
             <li><a href="https://github.com/AmjadSoufi" rel="me noopener">GitHub · @AmjadSoufi</a></li>
             <li><a href="https://be.linkedin.com/in/amjad-soufi-57794b316" rel="me noopener">LinkedIn · amjad-soufi</a></li>
-            <li><a href="mailto:amjad.soufi@student.arteveldehs.be">Email · amjad.soufi@student.arteveldehs.be</a></li>
+            <li><a href="mailto:amjadsoufi5588@gmail.com">Email · amjadsoufi5588@gmail.com</a></li>
           </ul>
         </section>
 
@@ -200,7 +204,7 @@
         <section id="contact" class="ssr-section">
           <h2>Contact</h2>
           <p>I'm looking for a first full-time role — junior front-end or full-stack, ideally with a small, opinionated team that ships often.</p>
-          <p><a href="mailto:amjad.soufi@student.arteveldehs.be">Say hello</a></p>
+          <p><a href="mailto:amjadsoufi5588@gmail.com">Say hello</a></p>
         </section>
       </main>
 
