@@ -36,6 +36,12 @@ test.describe('Portfolio', () => {
     }
   });
 
+  test('timeline shows completed Artevelde studies in Ghent', async ({ page }) => {
+    const education = page.locator('.sec-exp .exp-row').first();
+    await expect(education).toContainText('2024 — June 2026');
+    await expect(education).toContainText('Arteveldehogeschool, Ghent');
+  });
+
   test('loads the portfolio without an intro overlay or video', async ({ page }) => {
     expect(await page.locator('.intro').count()).toBe(0);
     expect(await page.locator('video').count()).toBe(0);

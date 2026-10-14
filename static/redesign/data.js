@@ -109,7 +109,7 @@ export const PORTFOLIO = {
     },
   ],
   experience: [
-    { when: "2024 — Now",  what: "Full-Stack Studies",          where: "Arteveldehogeschool, Bruges" },
+    { when: "2024 — June 2026", what: "Full-Stack Studies", where: "Arteveldehogeschool, Ghent" },
     { when: "2023 — 2024", what: "Web Development Foundations", where: "Self-directed + bootcamp" },
     { when: "2022",        what: "First commit",                where: "github.com/AmjadSoufi" },
   ],
