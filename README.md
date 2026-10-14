@@ -10,7 +10,6 @@ I’m a junior full-stack developer based in Bruges, Belgium. This portfolio bri
 - **Make It Happen** — A full-stack task manager built with Node.js, Express, and SQLite.
 - **KPOG** — A CMS-driven website built with Craft CMS, PHP, and Twig.
 - **Best of 2024** — An editorial microsite covering films, music, series, and games.
-- **Memory Game** — A browser game with a step-by-step tutorial for first-year programming students.
 
 Visit the website for more project details, technologies, and available code or demos.
 

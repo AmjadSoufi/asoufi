@@ -78,21 +78,6 @@ export const PORTFOLIO = {
       accent: 340,
     },
     {
-      id: "memory-game",
-      title: "Memory Game",
-      year: "2023",
-      kind: "Game",
-      image: "static/images/Memory-game.jpg",
-      tags: ["HTML", "CSS", "JavaScript"],
-      blurb: "A memory card game written for first-year programming students — entertainment plus a step-by-step tutorial for building it yourself.",
-      role: "Solo",
-      stack: ["HTML5", "CSS3", "JavaScript"],
-      links: [
-        { label: "Code", href: "https://github.com/pgmgent-atwork2/project-1-workshop-start-to-code-amjad-serdar" },
-      ],
-      accent: 145,
-    },
-    {
       id: "kpog",
       title: "KPOG",
       year: "2025",

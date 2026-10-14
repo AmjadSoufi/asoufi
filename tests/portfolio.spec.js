@@ -42,6 +42,11 @@ test.describe('Portfolio', () => {
     await expect(education).toContainText('Arteveldehogeschool, Ghent');
   });
 
+  test('omits Memory Game from selected work', async ({ page }) => {
+    await expect(page.getByTestId('project-card')).toHaveCount(4);
+    await expect(page.locator('#work')).not.toContainText('Memory Game');
+  });
+
   test('loads the portfolio without an intro overlay or video', async ({ page }) => {
     expect(await page.locator('.intro').count()).toBe(0);
     expect(await page.locator('video').count()).toBe(0);
@@ -247,6 +252,7 @@ test.describe('Regression checks', () => {
       await page.goto(baseURL);
       await expect(page.locator('#contact a')).toHaveAttribute('href', 'mailto:amjadsoufi5588@gmail.com');
       await expect(page.locator('#intro')).toContainText('amjadsoufi5588@gmail.com');
+      await expect(page.locator('#work')).not.toContainText('Memory Game');
     } finally {
       await context.close();
     }
@@ -263,7 +269,7 @@ test.describe('Regression checks', () => {
     await expect(page.getByTestId('project-card')).toHaveCount(1);
     await expect(page.getByTestId('project-card')).toContainText('Kanban App');
     await page.locator('#work .chip-all').click();
-    await expect(page.getByTestId('project-card')).toHaveCount(5);
+    await expect(page.getByTestId('project-card')).toHaveCount(4);
   });
 });
 
