@@ -3,7 +3,6 @@
 // (data-variant="editorial" is pinned in index.html).
 
 import { safeStorage, scrollToId, ScrollProgress, Marquee } from "./utils.jsx";
-import { Intro } from "./intro.jsx";
 import { NavBar, Hero } from "./nav-hero.jsx";
 import { About, Skills, Experience } from "./about-skills.jsx";
 import { Work, ProjectModal, Contact, Footer } from "./work-contact.jsx";
@@ -14,8 +13,6 @@ function App() {
 
   const [active, setActive] = React.useState("intro");
   const [openId, setOpenId] = React.useState(null);
-  const [introReplay, setIntroReplay] = React.useState(0);
-  const [, setIntroOver] = React.useState(false);
 
   const data = PORTFOLIO;
 
@@ -97,11 +94,6 @@ function App() {
 
   return (
     <div className="app" data-screen-label="Portfolio">
-      <Intro
-        key={introReplay}
-        forcePlay={introReplay > 0}
-        onDone={() => setIntroOver(true)}
-      />
       <ScrollProgress />
       <NavBar
         active={active}

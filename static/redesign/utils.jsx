@@ -31,7 +31,7 @@ const safeStorage = {
 };
 
 // Reference-counted scroll lock. Several overlays can require the lock at the
-// same time (intro, mobile drawer, project modal); scrolling is restored only
+// same time (mobile drawer, project modal); scrolling is restored only
 // when the LAST holder releases it, so one component's cleanup can never
 // unlock the page out from under another.
 let scrollLocks = 0;

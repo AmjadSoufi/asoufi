@@ -12,14 +12,7 @@ const test = base.extend({
   }, { auto: true }],
 });
 
-// The redesign renders a full-screen intro overlay (position:fixed; inset:0;
-// z-index:200; pointer-events:auto) on the first visit, which covers the page
-// and intercepts clicks. Seed the "seen" flag so tests exercise the actual app
-// instead of the overlay. See static/redesign/intro.jsx.
 test.beforeEach(async ({ page }) => {
-  await page.addInitScript(() => {
-    try { localStorage.setItem('asoufi.intro.seen', '1'); } catch (e) {}
-  });
   await page.goto('/');
 });
 
@@ -41,6 +34,12 @@ test.describe('Portfolio', () => {
     for (const id of ['intro', 'about', 'skills', 'work', 'contact']) {
       await expect(page.locator(`#${id}`)).toHaveCount(1);
     }
+  });
+
+  test('loads the portfolio without an intro overlay or video', async ({ page }) => {
+    expect(await page.locator('.intro').count()).toBe(0);
+    expect(await page.locator('video').count()).toBe(0);
+    expect(await bodyOverflow(page)).toBe('');
   });
 
   test('nav scrolls to a section', async ({ page }) => {
@@ -87,9 +86,7 @@ test.describe('Portfolio', () => {
 
   test('scroll lock is consistent across rapid modal open/close', async ({ page }) => {
     // Cycled through real UI actions: each open adds a holder and each close
-    // releases it; the final state must always be restored. The compound
-    // "release one holder while another remains" case is covered by the
-    // overlapping intro + drawer test.
+    // releases it; the final state must always be restored.
     for (let i = 0; i < 3; i++) {
       const card = page.getByTestId('project-card').first();
       await card.scrollIntoViewIfNeeded();
@@ -131,31 +128,6 @@ test.describe('Portfolio', () => {
     expect(await bodyOverflow(page)).toBe('');
   });
 
-  test('overlapping locks: intro releasing cannot unlock while the drawer is open', async ({ page }) => {
-    // Freeze time so the intro's 900ms fade stays in flight while the drawer
-    // opens — that guarantees a real overlap between two lock holders.
-    await page.clock.install();
-    await page.addInitScript(() => { try { localStorage.removeItem('asoufi.intro.seen'); } catch (e) {} });
-    await page.setViewportSize({ width: 375, height: 667 });
-    await page.goto('/');
-
-    const intro = page.locator('.intro');
-    await expect(intro).toBeVisible();
-    expect(await bodyOverflow(page)).toBe('hidden'); // holder 1: intro
-
-    await page.keyboard.press('Escape'); // -> fading (pointer-events: none), still locked
-    await page.getByTestId('nav-toggle').click(); // holder 2: drawer
-    await expect(page.getByTestId('nav-drawer')).toBeVisible();
-    expect(await bodyOverflow(page)).toBe('hidden');
-
-    await page.clock.runFor(1000); // intro's fade timer fires and the intro unmounts
-    await expect(intro).toBeHidden();
-    expect(await bodyOverflow(page)).toBe('hidden'); // drawer still holds the lock
-
-    await page.getByTestId('nav-toggle').click();
-    await expect(page.getByTestId('nav-drawer')).toBeHidden();
-    expect(await bodyOverflow(page)).toBe('');
-  });
 });
 
 
